@@ -21,6 +21,32 @@ For obvious reasons, many sick people limit communications, less often appear in
 14. Is there a correlation between different diseases? 
 15. Does a person lose appetite with kidney disease?
 
+### Data
+- Chronic Kidney Disease:  
+  &nbsp;&nbsp;Number of instances: 400  
+  &nbsp;&nbsp;[kaggle](https://www.kaggle.com/mansoordaku/ckdisease)  |  [ics.uci.edu](https://archive.ics.uci.edu/ml/datasets/Chronic_Kidney_Disease)
+
+- Ocular Disease:  
+  &nbsp;&nbsp;Number of instances: 6392  
+  &nbsp;&nbsp;[kaggle](https://www.kaggle.com/andrewmvd/ocular-disease-recognition-odir5k)
+
+- Cardiovascular Disease:  
+  &nbsp;&nbsp;Number of instances: 70,000  
+  &nbsp;&nbsp;[kaggle](https://www.kaggle.com/sulianova/cardiovascular-disease-dataset)
+
+- Heart Disease:  
+  &nbsp;&nbsp;Number of instances: 303  
+  &nbsp;&nbsp;[kaggle](https://www.kaggle.com/ronitf/heart-disease-uci)  |  [ics.uci.edu](https://archive.ics.uci.edu/ml/datasets/Heart+Disease)
+
+- Covid19 in India:  
+  &nbsp;&nbsp;Number of instances: 9,291  
+  &nbsp;&nbsp;[kaggle](https://www.kaggle.com/sudalairajkumar/covid19-in-india)  |  [covid19india.org](https://api.covid19india.org/)
+
+- Covid19 in Italy:  
+  &nbsp;&nbsp;Number of instances: 40,200  
+  &nbsp;&nbsp;[kaggle](https://www.kaggle.com/sudalairajkumar/covid19-in-italy)  |  [github.com](https://github.com/pcm-dpc/COVID-19)
+  
+
 ### Tech
 - **Backend:** *python3* using *fastapi* framework
 - **Frontend:** *vue.js* framework
