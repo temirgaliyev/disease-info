@@ -45,7 +45,9 @@ For obvious reasons, many sick people limit communications, less often appear in
 - Covid19 in Italy:  
   &nbsp;&nbsp;Number of instances: 40,200  
   &nbsp;&nbsp;[kaggle](https://www.kaggle.com/sudalairajkumar/covid19-in-italy)  |  [github.com](https://github.com/pcm-dpc/COVID-19)
-  
+
+### Use Case UML Diagram
+![usecase uml diagram](DiseaseInfo-UseCase-UML.png)
 
 ### Tech
 - **Backend:** *python3* using *fastapi* framework
