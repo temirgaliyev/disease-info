@@ -4,6 +4,11 @@ Simple and lightweight web-application that gives you some statistics about dise
 ### Project Goal
 For obvious reasons, many sick people limit communications, less often appear in crowded places. This might create a false impression of disease statistics. Our mini-project should help to show the real statistics of some diseases and let people to think about their health and lifestyle. 
 
+### Project Features
+- **Add Personal Data:** Add personal data, like height, weight, age, diseases. This data will be marked as unconfirmed
+- **Show Personal Statistics:** Show statistics, graphs using one's personal data, like what diseases do usually get at this age or location statistics of cases of Covid19 
+- **Show General Statistics:** Show general statistics, graphs, some advices
+
 ### Questions
 1. What is the most common eye disease?
 2. What diseases does a middle-aged man suffer from?
