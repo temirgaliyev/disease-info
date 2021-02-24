@@ -1,6 +1,15 @@
 # Disease Info
 Simple and lightweight web-application that gives you some statistics about diseases
 
+### Contents
++ [Project Goal](#project-goal)
++ [Project Features](#project-features)
++ [Questions](#questions)
++ [Data](#data)
++ [Use Case UML Diagram](#use-case-uml-diagram)
++ [Tech](#tech)
++ [Team](#team)
+
 ### Project Goal
 For obvious reasons, many sick people limit communications, less often appear in crowded places. This might create a false impression of disease statistics. Our mini-project should help to show the real statistics of some diseases and let people to think about their health and lifestyle. 
 
