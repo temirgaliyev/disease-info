@@ -1,0 +1,138 @@
+CREATE TABLE cat_binary (
+    id INT PRIMARY KEY NOT NULL
+    cat VARCHAR(5)
+);
+
+CREATE TABLE cat_bp (
+    id INT PRIMARY KEY NOT NULL,
+    cat VARCHAR(32)
+);
+
+CREATE TABLE cat_examination (
+    id INT PRIMARY KEY NOT NULL,
+    cat VARCHAR(32)
+);
+
+CREATE TABLE cat_eye (
+    id INT PRIMARY KEY NOT NULL,
+    cat VARCHAR(5)
+);
+
+CREATE TABLE cat_gender (
+    id INT PRIMARY KEY NOT NULL,
+    cat VARCHAR(8)
+);
+
+CREATE TABLE cat_chest_pain (
+    id INT PRIMARY KEY NOT NULL,
+    cat VARCHAR(20)
+);
+
+CREATE TABLE cardio(
+    c_id INT PRIMARY KEY NOT NULL,
+    c_age INT,
+    c_gender_id INT REFERENCES cat_gender(id),
+    c_height INT,
+    c_weight INT,
+    c_blood_pressure_id INT REFERENCES cat_bp(id),
+    c_cholesterol_id INT REFERENCES cat_examination(id),
+    c_glucose_id INT REFERENCES cat_examination(id),
+    c_smoke_id INT REFERENCES cat_binary(id),
+    c_alcohol_id INT REFERENCES cat_binary(id),
+    c_active_id INT REFERENCES cat_binary(id),
+    c_cardio_disease_id INT REFERENCES cat_binary(id),
+    c_hypertension_id INT REFERENCES cat_binary(id),
+    c_diabetes_id INT REFERENCES cat_binary(id)
+);
+
+CREATE TABLE heart(
+    h_id INT PRIMARY KEY NOT NULL,
+    h_age INT,
+    h_gender_id INT REFERENCES cat_gender(id),
+    h_chest_pain_type_id INT REFERENCES cat_chest_pain(id),
+    h_blood_pressure_id INT REFERENCES cat_bp(id),
+    h_cholesterol_id INT REFERENCES cat_examination(id),
+    h_diabetes_id INT REFERENCES cat_binary(id),
+    h_max_heart_rate INT, 
+    h_cad_id INT REFERENCES cat_binary(id),
+    h_heart_disease_id INT REFERENCES cat_binary(id),
+    h_hypertension_id INT REFERENCES cat_binary(id)
+);
+
+CREATE TABLE kidney(
+    k_id INT PRIMARY KEY NOT NULL,
+    k_age INT,
+    k_cad_id INT REFERENCES cat_binary(id),
+    k_blood_pressure_id INT REFERENCES cat_bp(id),
+    k_hypertension_id INT REFERENCES cat_binary(id),
+    k_glucose_id INT REFERENCES cat_examination(id),
+    k_diabetes_id INT REFERENCES cat_binary(id),
+    k_appetite_id INT REFERENCES cat_binary(id),
+    k_pedal_edema_id INT REFERENCES cat_binary(id),
+    k_anemia_id INT REFERENCES cat_binary(id),
+    k_kidney_disease_id INT REFERENCES cat_binary(id)
+);
+
+CREATE TABLE ocular_diagnostic_keywords(
+    odk_id INT PRIMARY KEY NOT NULL,
+    odk_diagnostic VARCHAR(64)
+);
+
+CREATE TABLE ocular(
+    o_id INT PRIMARY KEY NOT NULL,
+    o_age INT,
+    o_gender_id INT REFERENCES cat_gender(id),
+    o_normal_id INT REFERENCES cat_binary(id),
+    o_o_diabetes_id INT REFERENCES cat_binary(id),
+    o_glaucoma_id INT REFERENCES cat_binary(id),
+    o_cataract_id INT REFERENCES cat_binary(id),
+    o_hypertension_id INT REFERENCES cat_binary(id),
+    o_myopia_id INT REFERENCES cat_binary(id),
+    o_other_id INT REFERENCES cat_binary(id)
+);
+
+CREATE TABLE ocular_diagnostics(
+    od_id INT PRIMARY KEY NOT NULL,
+    od_case_id INT REFERENCES ocular(o_id),
+    od_diag_id INT REFERENCES ocular_diagnostic_keywords(odk_id),
+    od_eye_id INT REFERENCES cat_eye(id)
+);
+
+
+CREATE TABLE india_states(
+    ins_id INT PRIMARY KEY NOT NULL,
+    ins_state VARCHAR(42)
+);
+
+CREATE TABLE covid_india(
+    cin_id INT PRIMARY KEY NOT NULL,
+    cin_date DATE,
+    cin_state_id INT REFERENCES india_states(ins_id),
+    cin_indians INT,
+    cin_foreigns INT,
+    cin_cured INT,
+    cin_deaths INT,
+    cin_confirmed INT
+);
+
+CREATE TABLE italy_regions(
+    itr_id INT PRIMARY KEY NOT NULL,
+    itr_region VARCHAR(32)
+);
+
+CREATE TABLE italy_provinces(
+    itp_id INT PRIMARY KEY NOT NULL,
+    itp_region_id INT REFERENCES italy_regions(itr_id),
+    itp_province VARCHAR(42),
+    itp_abbreviation VARCHAR(2)  
+);
+
+CREATE TABLE covid_italy(
+    cit_id INT PRIMARY KEY NOT NULL,
+    cit_date DATE,
+    cit_province INT REFERENCES italy_provinces(itp_id),
+    cit_cases INT,
+    cit_latitude DOUBLE PRECISION,
+    cit_longitude DOUBLE PRECISION
+);
+
