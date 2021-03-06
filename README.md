@@ -5,8 +5,8 @@ Simple and lightweight web-application that gives you some statistics about dise
 + [Project Goal](#project-goal)
 + [Project Features](#project-features)
 + [Questions](#questions)
-+ [Data](#data)
 + [Use Case UML Diagram](#use-case-uml-diagram)
++ [Data](#data)
 + [Tech](#tech)
 + [Team](#team)
 
@@ -35,6 +35,9 @@ For obvious reasons, many sick people limit communications, less often appear in
 14. Is there a correlation between different diseases? 
 15. Does a person lose appetite with kidney disease?
 
+### Use Case UML Diagram
+![usecase uml diagram](DiseaseInfo-UseCase-UML.png)
+
 ### Data
 - Chronic Kidney Disease:  
   &nbsp;&nbsp;Number of instances: 400  
@@ -60,8 +63,6 @@ For obvious reasons, many sick people limit communications, less often appear in
   &nbsp;&nbsp;Number of instances: 40,200  
   &nbsp;&nbsp;[kaggle](https://www.kaggle.com/sudalairajkumar/covid19-in-italy)  |  [github.com](https://github.com/pcm-dpc/COVID-19)
 
-### Use Case UML Diagram
-![usecase uml diagram](DiseaseInfo-UseCase-UML.png)
 
 ### Tech
 - **Backend:** *python3* using *fastapi* framework
