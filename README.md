@@ -7,6 +7,7 @@ Simple and lightweight web-application that gives you some statistics about dise
 + [Questions](#questions)
 + [Use Case UML Diagram](#use-case-uml-diagram)
 + [Data](#data)
++ [Entity Relationship Diagram](#entity-relationship-diagram)
 + [Tech](#tech)
 + [Team](#team)
 
@@ -63,6 +64,9 @@ For obvious reasons, many sick people limit communications, less often appear in
   &nbsp;&nbsp;Number of instances: 40,200  
   &nbsp;&nbsp;[kaggle](https://www.kaggle.com/sudalairajkumar/covid19-in-italy)  |  [github.com](https://github.com/pcm-dpc/COVID-19)
 
+### Entity Relationship Diagram
+![entity relationship diagram](DiseaseInfo-ER.png)
+Note: as we have many categories, we used Relational Schema, otherwise we would have many relations as "has".
 
 ### Tech
 - **Backend:** *python3* using *fastapi* framework
