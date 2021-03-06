@@ -42,27 +42,35 @@ For obvious reasons, many sick people limit communications, less often appear in
 ### Data
 - Chronic Kidney Disease:  
   &nbsp;&nbsp;Number of instances: 400  
-  &nbsp;&nbsp;[kaggle](https://www.kaggle.com/mansoordaku/ckdisease)  |  [ics.uci.edu](https://archive.ics.uci.edu/ml/datasets/Chronic_Kidney_Disease)
-
+  &nbsp;&nbsp;source: [kaggle](https://www.kaggle.com/mansoordaku/ckdisease)  |  [ics.uci.edu](https://archive.ics.uci.edu/ml/datasets/Chronic_Kidney_Disease)  
+  &nbsp;&nbsp;used: [raw](data/raw/kidney_disease.csv) | [preprocessed](data/preprocessed/kidney.csv)
+  
 - Ocular Disease:  
   &nbsp;&nbsp;Number of instances: 6392  
-  &nbsp;&nbsp;[kaggle](https://www.kaggle.com/andrewmvd/ocular-disease-recognition-odir5k)
+  &nbsp;&nbsp;source: [kaggle](https://www.kaggle.com/andrewmvd/ocular-disease-recognition-odir5k)  
+  &nbsp;&nbsp;used: [raw](data/raw/ocular_disease.csv) | [preprocessed1](data/preprocessed/ocular.csv) [preprocessed2](data/preprocessed/ocular_diag_keywords.csv) [preprocessed3](data/preprocessed/eye_diagnostics.csv)
 
 - Cardiovascular Disease:  
   &nbsp;&nbsp;Number of instances: 70,000  
-  &nbsp;&nbsp;[kaggle](https://www.kaggle.com/sulianova/cardiovascular-disease-dataset)
+  &nbsp;&nbsp;source: [kaggle](https://www.kaggle.com/sulianova/cardiovascular-disease-dataset)  
+  &nbsp;&nbsp;used: [raw](data/raw/cardio_train.csv) | [preprocessed](data/preprocessed/cardio.csv)
 
 - Heart Disease:  
   &nbsp;&nbsp;Number of instances: 303  
-  &nbsp;&nbsp;[kaggle](https://www.kaggle.com/ronitf/heart-disease-uci)  |  [ics.uci.edu](https://archive.ics.uci.edu/ml/datasets/Heart+Disease)
+  &nbsp;&nbsp;source: [kaggle](https://www.kaggle.com/ronitf/heart-disease-uci)  |  [ics.uci.edu](https://archive.ics.uci.edu/ml/datasets/Heart+Disease)  
+  &nbsp;&nbsp;used: [raw](data/raw/heart.csv) | [preprocessed](data/preprocessed/heart.csv)
 
 - Covid19 in India:  
   &nbsp;&nbsp;Number of instances: 9,291  
-  &nbsp;&nbsp;[kaggle](https://www.kaggle.com/sudalairajkumar/covid19-in-india)  |  [covid19india.org](https://api.covid19india.org/)
+  &nbsp;&nbsp;source: [kaggle](https://www.kaggle.com/sudalairajkumar/covid19-in-india)  |  [covid19india.org](https://api.covid19india.org/)  
+  &nbsp;&nbsp;used: [raw](data/raw/covid_19_india.csv) | [preprocessed1](data/preprocessed/covid_india.csv) [preprocessed2](data/preprocessed/indian_states.csv)
 
 - Covid19 in Italy:  
   &nbsp;&nbsp;Number of instances: 40,200  
-  &nbsp;&nbsp;[kaggle](https://www.kaggle.com/sudalairajkumar/covid19-in-italy)  |  [github.com](https://github.com/pcm-dpc/COVID-19)
+  &nbsp;&nbsp;source: [kaggle](https://www.kaggle.com/sudalairajkumar/covid19-in-italy)  |  [github.com](https://github.com/pcm-dpc/COVID-19)  
+  &nbsp;&nbsp;used: [raw](data/raw/covid19_italy_province.csv) | [preprocessed1](data/preprocessed/covid_italy.csv) [preprocessed2](data/preprocessed/italy_provinces.csv) [preprocessed3](data/preprocessed/italy_regions.csv)  
+  
+[Preprocessing Script](data/process_data.ipynb)
 
 ### Entity Relationship Diagram
 ![entity relationship diagram](img/DiseaseInfo-ER.png)
