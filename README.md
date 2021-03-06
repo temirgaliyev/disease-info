@@ -37,7 +37,7 @@ For obvious reasons, many sick people limit communications, less often appear in
 15. Does a person lose appetite with kidney disease?
 
 ### Use Case UML Diagram
-![usecase uml diagram](DiseaseInfo-UseCase-UML.png)
+![usecase uml diagram](img/DiseaseInfo-UseCase-UML.png)
 
 ### Data
 - Chronic Kidney Disease:  
@@ -65,7 +65,7 @@ For obvious reasons, many sick people limit communications, less often appear in
   &nbsp;&nbsp;[kaggle](https://www.kaggle.com/sudalairajkumar/covid19-in-italy)  |  [github.com](https://github.com/pcm-dpc/COVID-19)
 
 ### Entity Relationship Diagram
-![entity relationship diagram](DiseaseInfo-ER.png)
+![entity relationship diagram](img/DiseaseInfo-ER.png)
 Note: as we have many categories, we used Relational Schema, otherwise we would have many relations as "has".
 
 ### Tech
