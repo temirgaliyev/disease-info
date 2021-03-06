@@ -1,0 +1,95 @@
+id,diagnostic
+0,retinal pigment epithelial hypertrophy
+1,proliferative diabetic retinopathy
+2,central serous chorioretinopathy
+3,hypertensive retinopathy
+4,pigment epithelium proliferation
+5,silicone oil eye
+6,chorioretinal atrophy
+7,glial remnants anterior to the optic disc
+8,age-related macular degeneration
+9,tessellated fundus
+10,suspected moderate non proliferative retinopathy
+11,chorioretinal atrophy with pigmentation proliferation
+12,post laser photocoagulation
+13,vitreous opacity
+14,vitreous degeneration
+15,macular hole
+16,pathological myopia
+17,retinitis pigmentosa
+18,suspected retinal vascular sheathing
+19,laser spot
+20,optic nerve atrophy
+21,diabetic retinopathy
+22,atrophic change
+23,depigmentation of the retinal pigment epithelium
+24,moderate non proliferative retinopathy
+25,retinal pigment epithelium atrophy
+26,old branch retinal vein occlusion
+27,peripapillary atrophy
+28,pigmentation disorder
+29,macular coloboma
+30,suspected cataract
+31,mild nonproliferative retinopathy
+32,diffuse retinal atrophy
+33,suspicious diabetic retinopathy
+34,morning glory syndrome
+35,retinal detachment
+36,severe nonproliferative retinopathy
+37,retinochoroidal coloboma
+38,suspected diabetic retinopathy
+39,glaucoma
+40,no fundus image
+41,suspected abnormal color of  optic disc
+42,wedge white line change
+43,suspected microvascular anomalies
+44,suspected macular epimacular membrane
+45,low image quality
+46,branch retinal artery occlusion
+47,oval yellow-white atrophy
+48,branch retinal vein occlusion
+49,diffuse chorioretinal atrophy
+50,retina fold
+51,suspected glaucoma
+52,idiopathic choroidal neovascularization
+53,anterior segment image
+54,drusen
+55,wet age-related macular degeneration
+56,maculopathy
+57,macular epiretinal membrane
+58,myopic maculopathy
+59,optic discitis
+60,retinal pigmentation
+61,normal fundus
+62,lens dust
+63,spotted membranous change
+64,old choroiditis
+65,abnormal pigment 
+66,myelinated nerve fibers
+67,dry age-related macular degeneration
+68,old central retinal vein occlusion
+69,refractive media opacity
+70,white vessel
+71,fundus laser photocoagulation spots
+72,central retinal artery occlusion
+73,macular pigmentation disorder
+74,intraretinal hemorrhage
+75,retinal vascular sheathing
+76,arteriosclerosis
+77,myopia retinopathy
+78,epiretinal membrane
+79,severe proliferative diabetic retinopathy
+80,old chorioretinopathy
+81,choroidal nevus
+82,congenital choroidal coloboma
+83,image offset
+84,intraretinal microvascular abnormality
+85,optic disk photographically invisible
+86,post retinal laser surgery
+87,central retinal vein occlusion
+88,epiretinal membrane over the macula
+89,optic disc edema
+90,optic disk epiretinal membrane
+91,cataract
+92,atrophy
+93,vessel tortuosity
