@@ -83,7 +83,7 @@ CREATE TABLE ocular(
     o_age INT,
     o_gender_id INT REFERENCES cat_gender(id),
     o_normal BOOLEAN,
-    o_o_diabetes BOOLEAN,
+    o_diabetes BOOLEAN,
     o_glaucoma BOOLEAN,
     o_cataract BOOLEAN,
     o_hypertension BOOLEAN,
