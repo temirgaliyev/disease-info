@@ -1,14 +1,14 @@
-CREATE TABLE cat_binary (
-    id INT PRIMARY KEY NOT NULL
-    cat VARCHAR(5)
-);
-
 CREATE TABLE cat_bp (
     id INT PRIMARY KEY NOT NULL,
     cat VARCHAR(32)
 );
 
-CREATE TABLE cat_examination (
+CREATE TABLE cat_chol_exam (
+    id INT PRIMARY KEY NOT NULL,
+    cat VARCHAR(32)
+);
+
+CREATE TABLE cat_gluc_exam (
     id INT PRIMARY KEY NOT NULL,
     cat VARCHAR(32)
 );
@@ -35,14 +35,14 @@ CREATE TABLE cardio(
     c_height INT,
     c_weight INT,
     c_blood_pressure_id INT REFERENCES cat_bp(id),
-    c_cholesterol_id INT REFERENCES cat_examination(id),
-    c_glucose_id INT REFERENCES cat_examination(id),
-    c_smoke_id INT REFERENCES cat_binary(id),
-    c_alcohol_id INT REFERENCES cat_binary(id),
-    c_active_id INT REFERENCES cat_binary(id),
-    c_cardio_disease_id INT REFERENCES cat_binary(id),
-    c_hypertension_id INT REFERENCES cat_binary(id),
-    c_diabetes_id INT REFERENCES cat_binary(id)
+    c_cholesterol_id INT REFERENCES cat_chol_exam(id),
+    c_glucose_id INT REFERENCES cat_gluc_exam(id),
+    c_smoke BOOLEAN,
+    c_alcohol BOOLEAN,
+    c_active BOOLEAN,
+    c_cardio_disease BOOLEAN,
+    c_hypertension BOOLEAN,
+    c_diabetes BOOLEAN
 );
 
 CREATE TABLE heart(
@@ -51,26 +51,26 @@ CREATE TABLE heart(
     h_gender_id INT REFERENCES cat_gender(id),
     h_chest_pain_type_id INT REFERENCES cat_chest_pain(id),
     h_blood_pressure_id INT REFERENCES cat_bp(id),
-    h_cholesterol_id INT REFERENCES cat_examination(id),
-    h_diabetes_id INT REFERENCES cat_binary(id),
+    h_cholesterol_id INT REFERENCES cat_chol_exam(id),
+    h_diabetes BOOLEAN,
     h_max_heart_rate INT, 
-    h_cad_id INT REFERENCES cat_binary(id),
-    h_heart_disease_id INT REFERENCES cat_binary(id),
-    h_hypertension_id INT REFERENCES cat_binary(id)
+    h_cad BOOLEAN,
+    h_heart_disease BOOLEAN,
+    h_hypertension BOOLEAN
 );
 
 CREATE TABLE kidney(
     k_id INT PRIMARY KEY NOT NULL,
     k_age INT,
-    k_cad_id INT REFERENCES cat_binary(id),
+    k_cad BOOLEAN,
     k_blood_pressure_id INT REFERENCES cat_bp(id),
-    k_hypertension_id INT REFERENCES cat_binary(id),
-    k_glucose_id INT REFERENCES cat_examination(id),
-    k_diabetes_id INT REFERENCES cat_binary(id),
-    k_appetite_id INT REFERENCES cat_binary(id),
-    k_pedal_edema_id INT REFERENCES cat_binary(id),
-    k_anemia_id INT REFERENCES cat_binary(id),
-    k_kidney_disease_id INT REFERENCES cat_binary(id)
+    k_hypertension BOOLEAN,
+    k_glucose_id INT REFERENCES cat_gluc_exam(id),
+    k_diabetes BOOLEAN,
+    k_appetite BOOLEAN,
+    k_pedal_edema BOOLEAN,
+    k_anemia BOOLEAN,
+    k_kidney_disease BOOLEAN
 );
 
 CREATE TABLE ocular_diagnostic_keywords(
@@ -82,13 +82,13 @@ CREATE TABLE ocular(
     o_id INT PRIMARY KEY NOT NULL,
     o_age INT,
     o_gender_id INT REFERENCES cat_gender(id),
-    o_normal_id INT REFERENCES cat_binary(id),
-    o_o_diabetes_id INT REFERENCES cat_binary(id),
-    o_glaucoma_id INT REFERENCES cat_binary(id),
-    o_cataract_id INT REFERENCES cat_binary(id),
-    o_hypertension_id INT REFERENCES cat_binary(id),
-    o_myopia_id INT REFERENCES cat_binary(id),
-    o_other_id INT REFERENCES cat_binary(id)
+    o_normal BOOLEAN,
+    o_o_diabetes BOOLEAN,
+    o_glaucoma BOOLEAN,
+    o_cataract BOOLEAN,
+    o_hypertension BOOLEAN,
+    o_myopia BOOLEAN,
+    o_other BOOLEAN
 );
 
 CREATE TABLE ocular_diagnostics(
