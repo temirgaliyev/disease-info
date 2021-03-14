@@ -36,6 +36,8 @@ For obvious reasons, many sick people limit communications, less often appear in
 14. Is there a correlation between different diseases? 
 15. Does a person lose appetite with kidney disease?
 
+[Answering queries](queries/questions) 
+
 ### Use Case UML Diagram
 ![usecase uml diagram](img/DiseaseInfo-UseCase-UML.png)
 
