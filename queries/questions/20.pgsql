@@ -1,0 +1,17 @@
+-- -- 20. How many percentage of womens has high blood pressure and normal cholesterol examination results?
+-- SELECT 
+--     -- *,
+--     -- COUNT(*) FILTER (WHERE )
+--     *
+-- FROM
+--     cat_gender,
+--     cat_bp,
+--     cat_chol_exam,
+--     cardio,
+--     heart
+-- WHERE
+--     heart.h_gender_id = cat_gender.id
+--     AND
+--     cardio.c_gender_id = cat_gender.id
+--     ;
+
