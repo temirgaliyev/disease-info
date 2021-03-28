@@ -88,5 +88,3 @@ For obvious reasons, many sick people limit communications, less often appear in
 
 ### Team
 Yelmurat Temirgaliyev  
-Zhanat Shakimov  
-Bislam Makhmutov
