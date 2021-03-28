@@ -4,6 +4,7 @@ Simple and lightweight web-application that gives you some statistics about dise
 ### Contents
 + [Project Goal](#project-goal)
 + [Project Features](#project-features)
++ [Application](#application)
 + [Questions](#questions)
 + [Use Case UML Diagram](#use-case-uml-diagram)
 + [Data](#data)
@@ -18,6 +19,11 @@ For obvious reasons, many sick people limit communications, less often appear in
 - **Add Personal Data:** Add personal data, like height, weight, age, diseases. This data will be marked as unconfirmed
 - **Show Personal Statistics:** Show statistics, graphs using one's personal data, like what diseases do usually get at this age or location statistics of cases of Covid19 
 - **Show General Statistics:** Show general statistics, graphs, some advices
+
+### Application
+<img src="img/app_general_graphs.png" width="500">
+<img src="img/app_personal_quetsions.png" width="500">
+<img src="img/app_personal_stats.png" width="500">
 
 ### Questions
 1. What is the most common eye disease? [SQL](queries/questions/1.pgsql)
