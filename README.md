@@ -35,6 +35,10 @@ For obvious reasons, many sick people limit communications, less often appear in
 13. Which gender is most likely to get sick with each of the diseases?
 14. Is there a correlation between different diseases? 
 15. Does a person lose appetite with kidney disease?
+16. How likely to get age-related disease on each eye?
+17. How many males has white vessels on their left eye?
+18. What blood pressure, cholesterol examination, glucose examination and gender in average has oldest people with cardio disease?
+19. what is the distribution of diseases of each eye in different genders?
 
 [Answering queries](queries/questions) 
 
