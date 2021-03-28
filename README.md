@@ -80,7 +80,6 @@ For obvious reasons, many sick people limit communications, less often appear in
 
 ### Entity Relationship Diagram
 ![entity relationship diagram](img/DiseaseInfo-ER.png)
-Note: as we have many categories, we used Relational Schema, otherwise we would have many relations as "has".
 
 ### Tech
 - **Backend:** *python3* using *fastapi* framework
