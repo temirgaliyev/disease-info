@@ -20,25 +20,25 @@ For obvious reasons, many sick people limit communications, less often appear in
 - **Show General Statistics:** Show general statistics, graphs, some advices
 
 ### Questions
-1. What is the most common eye disease?
-2. What diseases does a middle-aged man suffer from?
-3. What is the mean arterial pressure of smokers?
-4. What is the percentage of people with myocardial ischemia among those with heart disease?
-5. What is the susceptibility of myocardial ischemia by age?
-6. What is the most common eye disease in people with diabetes?
-7. What percentage of diabetics by gender?
-8. What is the most concomitant disease of glaucoma?
-9. Is there a correlation between cardiovascular diseases and alcohol, smoking, physical activity?
-10. In which region of Italy the least people got sick with covid?
-11. On what day was the highest number of cases in Italy?
-12. Is there a correlation between the number of cases of covid per day in Italy and India?
-13. Which gender is most likely to get sick with each of the diseases?
-14. Is there a correlation between different diseases? 
-15. Does a person lose appetite with kidney disease?
-16. How likely to get age-related disease on each eye?
-17. How many males has white vessels on their left eye?
-18. What blood pressure, cholesterol examination, glucose examination and gender in average has oldest people with cardio disease?
-19. what is the distribution of diseases of each eye in different genders?
+1. What is the most common eye disease? [SQL](queries/questions/1.pgsql)
+2. What diseases does a middle-aged man suffer from? [SQL](queries/questions/2.pgsql)
+3. What is the mean arterial pressure of smokers? [SQL](queries/questions/3.pgsql)
+4. What is the percentage of people with myocardial ischemia among those with heart disease? [SQL](queries/questions/4.pgsql)
+5. What is the susceptibility of myocardial ischemia by age? [SQL](queries/questions/5.pgsql)
+6. What is the most common eye disease in people with diabetes? [SQL](queries/questions/6.pgsql)
+7. What percentage of diabetics by gender? [SQL](queries/questions/7.pgsql)
+8. What is the most concomitant disease of glaucoma? [SQL](queries/questions/8.pgsql)
+9. Is there a correlation between cardiovascular diseases and alcohol, smoking, physical activity? [SQL](queries/questions/9.pgsql)
+10. In which region of Italy the least people got sick with covid? [SQL](queries/questions/10.pgsql)
+11. On what day was the highest number of cases in Italy? [SQL](queries/questions/11.pgsql)
+12. Is there a correlation between the number of cases of covid per day in Italy and India? [SQL](queries/questions/12.pgsql)
+13. Which gender is most likely to get sick with each of the diseases? [SQL](queries/questions/13.pgsql)
+14. Is there a correlation between different diseases? [SQL](queries/questions/14.pgsql)
+15. Does a person lose appetite with kidney disease? [SQL](queries/questions/15.pgsql)
+16. How likely to get age-related disease on each eye? [SQL](queries/questions/16.pgsql)
+17. How many males has white vessels on their left eye? [SQL](queries/questions/17.pgsql)
+18. What blood pressure, cholesterol examination, glucose examination and gender in average has oldest people with cardio disease? [SQL](queries/questions/18.pgsql)
+19. what is the distribution of diseases of each eye in different genders? [SQL](queries/questions/19.pgsql)
 
 [Answering queries](queries/questions) 
 
