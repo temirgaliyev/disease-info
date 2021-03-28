@@ -82,8 +82,7 @@ For obvious reasons, many sick people limit communications, less often appear in
 ![entity relationship diagram](img/DiseaseInfo-ER.png)
 
 ### Tech
-- **Backend:** *python3* using *fastapi* framework
-- **Frontend:** *vue.js* framework
+- **Desktop:** *python3* using [*PyQt5*](https://www.riverbankcomputing.com/static/Docs/PyQt5/) for GUI and [*PyQtGraph*](http://www.pyqtgraph.org/) for graphs
 - **Database:** - *PostgreSQL* because it's free, opensource and has active community. Developers of PostgreSQL speaks at conferences and share the details of the implementation of the base
 
 ### Team
