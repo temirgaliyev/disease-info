@@ -1,4 +1,4 @@
--- What blood pressure, cholesterol examination, glucose examination and gender in average has oldest people with cardio disease?
+-- 18. What blood pressure, cholesterol examination, glucose examination and gender in average has oldest people with cardio disease?
 
 SELECT
     mode() WITHIN GROUP (ORDER BY cat_bp.cat) AS blood_pressure,
