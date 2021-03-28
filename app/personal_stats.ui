@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>846</width>
+    <height>593</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QScrollArea" name="scrollArea">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scrollAreaWidgetContents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>826</width>
+         <height>573</height>
+        </rect>
+       </property>
+       <widget class="QLabel" name="label_cardio">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>50</y>
+          <width>821</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>74% of people with parameters like you have cardio diseases</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_heart">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>80</y>
+          <width>801</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>34% of people with parameters like you have heart diseases</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_head">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>20</y>
+          <width>821</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>15</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>According to our biased data:</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_cad">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>110</y>
+          <width>801</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>20% of people with parameters like you have coronary artery disease</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_eyes">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>140</y>
+          <width>801</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>20% of people with parameters like you have problems with eyes</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_exam">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>170</y>
+          <width>801</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Your blood pressure and glucose level are normal, but cholesterol above normal</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_biased_stats">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>230</y>
+          <width>821</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>13</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>This data is based on biased statistics</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_biased_stats_2">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>260</y>
+          <width>771</width>
+          <height>71</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Even if you are feeling great, it is recommended to have a full body examination at least once every 2-3 years&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton">
+        <property name="geometry">
+         <rect>
+          <x>560</x>
+          <y>340</y>
+          <width>251</width>
+          <height>25</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Go to full statistics with graphs </string>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
