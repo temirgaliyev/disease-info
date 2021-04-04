@@ -27,7 +27,7 @@ For obvious reasons, many sick people limit communications, less often appear in
 
 ### Questions
 1. What is the most common eye disease? [SQL](queries/questions/1.pgsql)
-2. What diseases does a middle-aged man suffer from? [SQL](queries/questions/2.pgsql)
+2. What diseases does a middle-aged man suffer from? [SQL](queries/questions/2.pgsql)  ||  [RA](img/ra/2.png)
 3. What is the mean arterial pressure of smokers? [SQL](queries/questions/3.pgsql)
 4. What is the percentage of people with myocardial ischemia among those with heart disease? [SQL](queries/questions/4.pgsql)
 5. What is the susceptibility of myocardial ischemia by age? [SQL](queries/questions/5.pgsql)
@@ -38,13 +38,13 @@ For obvious reasons, many sick people limit communications, less often appear in
 10. In which region of Italy the least people got sick with covid? [SQL](queries/questions/10.pgsql)
 11. On what day was the highest number of cases in Italy? [SQL](queries/questions/11.pgsql)
 12. Is there a correlation between the number of cases of covid per day in Italy and India? [SQL](queries/questions/12.pgsql)
-13. Which gender is most likely to get sick with each of the diseases? [SQL](queries/questions/13.pgsql)
-14. Is there a correlation between different diseases? [SQL](queries/questions/14.pgsql)
+13. Which gender is most likely to get sick with each of the diseases? [SQL](queries/questions/13.pgsql)  ||  [RA](img/ra/13.png)
+14. Is there a correlation between different diseases? [SQL](queries/questions/14.pgsql)  ||  [RA](img/ra/14.png)
 15. Does a person lose appetite with kidney disease? [SQL](queries/questions/15.pgsql)
-16. How likely to get age-related disease on each eye? [SQL](queries/questions/16.pgsql)
-17. How many males has white vessels on their left eye? [SQL](queries/questions/17.pgsql)
-18. What blood pressure, cholesterol examination, glucose examination and gender in average has oldest people with cardio disease? [SQL](queries/questions/18.pgsql)
-19. what is the distribution of diseases of each eye in different genders? [SQL](queries/questions/19.pgsql)
+16. How likely to get age-related disease on each eye? [SQL](queries/questions/16.pgsql)  ||  [RA](img/ra/16.png)
+17. How many males has white vessels on their left eye? [SQL](queries/questions/17.pgsql)  ||  [RA](img/ra/17.png)
+18. What blood pressure, cholesterol examination, glucose examination and gender in average has oldest people with cardio disease? [SQL](queries/questions/18.pgsql)  ||  [RA](img/ra/18.png)
+19. what is the distribution of diseases of each eye in different genders? [SQL](queries/questions/19.pgsql)  ||  [RA](img/ra/19.png)
 
 [Answering queries](queries/questions) 
 
