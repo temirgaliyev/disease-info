@@ -1,0 +1,662 @@
+SELECT 
+    COUNT(*)
+FROM 
+(
+    SELECT
+        cat_gender.cat,
+        COUNT(*) AS cardio_count
+    FROM 
+        cat_gender,
+        cardio
+    WHERE
+        cardio.c_gender_id = cat_gender.id
+    GROUP BY
+        cat_gender.cat
+) AS cardio_gender,
+(
+    SELECT
+        cat_gender.cat,
+        COUNT(*) AS heart_count
+    FROM 
+        cat_gender,
+        heart
+    WHERE
+        heart.h_gender_id = cat_gender.id
+    GROUP BY
+        cat_gender.cat
+) AS heart_gender,
+(
+    SELECT
+        cat_gender.cat,
+        COUNT(*) AS ocular_count
+    FROM 
+        cat_gender,
+        ocular,
+        ocular_diagnostics,
+        ocular_diagnostic_keywords
+    WHERE
+        ocular.o_gender_id = cat_gender.id
+        AND
+        ocular.o_id = ocular_diagnostics.od_id
+        AND
+        ocular_diagnostics.od_diag_id = ocular_diagnostic_keywords.odk_id
+        AND
+        ocular_diagnostic_keywords.odk_diagnostic != 'normal fundus'
+    GROUP BY
+        cat_gender.cat
+) AS ocular_gender
+WHERE
+    cardio_gender.cat = heart_gender.cat
+    AND
+    ocular_gender.cat = cardio_gender.cat
+;
+-- RESULT: 2
+
+------------------ (cat_gender ⋈ cardio) ⋈ ((cat_gender ⋈ heart) ⋈ (cat_gender ⋈ (ocular ⋈ (ocular_diagnostics ⋈ ocular_diagnostic_keywords)))) ------------------
+SELECT 
+    COUNT(*)
+FROM 
+(
+    SELECT
+        cat_gender.cat,
+        COUNT(*)
+    FROM 
+        cat_gender
+            JOIN
+            cardio
+            ON
+            cardio.c_gender_id = cat_gender.id
+    GROUP BY
+        cat_gender.cat
+) AS cardio_gender
+    JOIN
+    (
+        (
+            SELECT
+                cat_gender.cat,
+                COUNT(*)
+            FROM 
+                cat_gender
+                    JOIN
+                    heart
+                    ON
+                    heart.h_gender_id = cat_gender.id
+            GROUP BY
+                cat_gender.cat
+        ) AS heart_gender
+            JOIN
+            (
+                SELECT
+                    cat_gender.cat,
+                    COUNT(*)
+                FROM 
+                    cat_gender
+                        JOIN
+                        (
+                            ocular
+                                JOIN
+                                (
+                                    ocular_diagnostics
+                                        JOIN
+                                        ocular_diagnostic_keywords
+                                        ON
+                                        ocular_diagnostics.od_diag_id = ocular_diagnostic_keywords.odk_id
+                                        AND
+                                        ocular_diagnostic_keywords.odk_diagnostic != 'normal fundus'
+                                )
+                                ON
+                                ocular.o_id = ocular_diagnostics.od_id
+                        )
+                        ON
+                        ocular.o_gender_id = cat_gender.id
+                GROUP BY
+                    cat_gender.cat
+            ) AS ocular_gender
+            ON
+            TRUE
+    )
+    ON
+    cardio_gender.cat = heart_gender.cat
+    AND
+    ocular_gender.cat = cardio_gender.cat    
+;
+-- RESULT: 2
+
+-------- INTERMEDIATE JOIN CARDINALITIES
+---- cat_gender ⋈ cardio
+SELECT
+    COUNT(*)
+FROM 
+    cat_gender
+        JOIN
+        cardio
+        ON
+        cardio.c_gender_id = cat_gender.id
+;
+-- RESULT: 70000
+
+---- cat_gender ⋈ heart
+SELECT
+    COUNT(*)
+FROM 
+    cat_gender
+        JOIN
+        heart
+        ON
+        heart.h_gender_id = cat_gender.id
+;
+-- RESULT: 303
+
+---- ocular_diagnostics ⋈ ocular_diagnostic_keywords
+SELECT
+    COUNT(*)
+FROM
+    ocular_diagnostics
+        JOIN
+        ocular_diagnostic_keywords
+        ON
+        ocular_diagnostics.od_diag_id = ocular_diagnostic_keywords.odk_id
+        AND
+        ocular_diagnostic_keywords.odk_diagnostic != 'normal fundus'
+;
+-- RESULT: 8361
+
+---- ocular ⋈ (ocular_diagnostics ⋈ ocular_diagnostic_keywords)
+SELECT
+    COUNT(*)
+FROM
+    ocular
+        JOIN
+        (
+            ocular_diagnostics
+                JOIN
+                ocular_diagnostic_keywords
+                ON
+                ocular_diagnostics.od_diag_id = ocular_diagnostic_keywords.odk_id
+                AND
+                ocular_diagnostic_keywords.odk_diagnostic != 'normal fundus'
+        )
+        ON
+        ocular.o_id = ocular_diagnostics.od_id
+;
+-- RESULT: 3658
+
+---- cat_gender ⋈ (ocular ⋈ (ocular_diagnostics ⋈ ocular_diagnostic_keywords))
+SELECT
+    COUNT(*)
+FROM 
+    cat_gender
+        JOIN
+        (
+            ocular
+                JOIN
+                (
+                    ocular_diagnostics
+                        JOIN
+                        ocular_diagnostic_keywords
+                        ON
+                        ocular_diagnostics.od_diag_id = ocular_diagnostic_keywords.odk_id
+                        AND
+                        ocular_diagnostic_keywords.odk_diagnostic != 'normal fundus'
+                )
+                ON
+                ocular.o_id = ocular_diagnostics.od_id
+        )
+        ON
+        ocular.o_gender_id = cat_gender.id
+;
+-- RESULT: 3658
+
+---- (cat_gender ⋈ heart) ⋈ (cat_gender ⋈ (ocular ⋈ (ocular_diagnostics ⋈ ocular_diagnostic_keywords)))
+SELECT
+    COUNT(*)
+FROM
+    (
+        SELECT
+            cat_gender.cat,
+            COUNT(*)
+        FROM 
+            cat_gender
+                JOIN
+                heart
+                ON
+                heart.h_gender_id = cat_gender.id
+        GROUP BY
+            cat_gender.cat
+    ) AS heart_gender
+        JOIN
+        (
+            SELECT
+                cat_gender.cat,
+                COUNT(*)
+            FROM 
+                cat_gender
+                    JOIN
+                    (
+                        ocular
+                            JOIN
+                            (
+                                ocular_diagnostics
+                                    JOIN
+                                    ocular_diagnostic_keywords
+                                    ON
+                                    ocular_diagnostics.od_diag_id = ocular_diagnostic_keywords.odk_id
+                                    AND
+                                    ocular_diagnostic_keywords.odk_diagnostic != 'normal fundus'
+                            )
+                            ON
+                            ocular.o_id = ocular_diagnostics.od_id
+                    )
+                    ON
+                    ocular.o_gender_id = cat_gender.id
+            GROUP BY
+                cat_gender.cat
+        ) AS ocular_gender
+        ON
+        TRUE
+;
+-- RESULT: 4
+
+-- SUM OF INTERMEDIATE JOINS CARDINALITIES = 70000 + 303 + 8361 + 3658 + 3658 + 4 + 2 = 85986
+
+
+------------------ ((cat_gender ⋈ cardio) ⋈ (cat_gender ⋈ heart)) ⋈ (cat_gender ⋈ (ocular ⋈ (ocular_diagnostics ⋈ ocular_diagnostic_keywords))) ------------------
+SELECT 
+    COUNT(*)
+FROM 
+(
+    (
+        SELECT
+            cat_gender.cat,
+            COUNT(*)
+        FROM 
+            cat_gender
+                JOIN
+                cardio
+                ON
+                cardio.c_gender_id = cat_gender.id
+        GROUP BY
+            cat_gender.cat
+    ) AS cardio_gender
+        JOIN
+        (
+            SELECT
+                cat_gender.cat,
+                COUNT(*)
+            FROM 
+                cat_gender
+                    JOIN
+                    heart
+                    ON
+                    heart.h_gender_id = cat_gender.id
+            GROUP BY
+                cat_gender.cat
+        ) AS heart_gender
+        ON
+        cardio_gender.cat = heart_gender.cat
+)
+    JOIN
+    (
+        SELECT
+            cat_gender.cat,
+            COUNT(*)
+        FROM 
+            cat_gender
+                JOIN
+                (
+                    ocular
+                        JOIN
+                        (
+                            ocular_diagnostics
+                                JOIN
+                                ocular_diagnostic_keywords
+                                ON
+                                ocular_diagnostics.od_diag_id = ocular_diagnostic_keywords.odk_id
+                                AND
+                                ocular_diagnostic_keywords.odk_diagnostic != 'normal fundus'
+                        )
+                        ON
+                        ocular.o_id = ocular_diagnostics.od_id
+                )
+                ON
+                ocular.o_gender_id = cat_gender.id
+        GROUP BY
+            cat_gender.cat
+    ) AS ocular_gender
+    ON
+    ocular_gender.cat = cardio_gender.cat
+;
+-- RESULT: 2
+
+-------- INTERMEDIATE JOIN CARDINALITIES
+---- cat_gender ⋈ cardio
+SELECT
+    COUNT(*)
+FROM 
+    cat_gender
+        JOIN
+        cardio
+        ON
+        cardio.c_gender_id = cat_gender.id
+;
+-- RESULT: 70000
+
+---- cat_gender ⋈ heart
+SELECT
+    COUNT(*)
+FROM 
+    cat_gender
+        JOIN
+        heart
+        ON
+        heart.h_gender_id = cat_gender.id
+;
+-- RESULT: 303
+
+---- (cat_gender ⋈ cardio) ⋈ (cat_gender ⋈ heart)
+SELECT 
+    COUNT(*)
+FROM 
+    (
+        SELECT
+            cat_gender.cat,
+            COUNT(*)
+        FROM 
+            cat_gender
+                JOIN
+                cardio
+                ON
+                cardio.c_gender_id = cat_gender.id
+        GROUP BY
+            cat_gender.cat
+    ) AS cardio_gender
+        JOIN
+        (
+            SELECT
+                cat_gender.cat,
+                COUNT(*)
+            FROM 
+                cat_gender
+                    JOIN
+                    heart
+                    ON
+                    heart.h_gender_id = cat_gender.id
+            GROUP BY
+                cat_gender.cat
+        ) AS heart_gender
+        ON
+        cardio_gender.cat = heart_gender.cat
+;
+-- RESULT: 2
+
+---- ocular_diagnostics ⋈ ocular_diagnostic_keywords
+SELECT
+    COUNT(*)
+FROM
+    ocular_diagnostics
+        JOIN
+        ocular_diagnostic_keywords
+        ON
+        ocular_diagnostics.od_diag_id = ocular_diagnostic_keywords.odk_id
+        AND
+        ocular_diagnostic_keywords.odk_diagnostic != 'normal fundus'
+;
+-- RESULT: 8361
+
+---- ocular ⋈ (ocular_diagnostics ⋈ ocular_diagnostic_keywords)
+SELECT
+    COUNT(*)
+FROM
+    ocular
+        JOIN
+        (
+            ocular_diagnostics
+                JOIN
+                ocular_diagnostic_keywords
+                ON
+                ocular_diagnostics.od_diag_id = ocular_diagnostic_keywords.odk_id
+                AND
+                ocular_diagnostic_keywords.odk_diagnostic != 'normal fundus'
+        )
+        ON
+        ocular.o_id = ocular_diagnostics.od_id
+;
+-- RESULT: 3658
+
+---- cat_gender ⋈ (ocular ⋈ (ocular_diagnostics ⋈ ocular_diagnostic_keywords))
+SELECT
+    COUNT(*)
+FROM 
+    cat_gender
+        JOIN
+        (
+            ocular
+                JOIN
+                (
+                    ocular_diagnostics
+                        JOIN
+                        ocular_diagnostic_keywords
+                        ON
+                        ocular_diagnostics.od_diag_id = ocular_diagnostic_keywords.odk_id
+                        AND
+                        ocular_diagnostic_keywords.odk_diagnostic != 'normal fundus'
+                )
+                ON
+                ocular.o_id = ocular_diagnostics.od_id
+        )
+        ON
+        ocular.o_gender_id = cat_gender.id
+;
+-- RESULT: 3658
+
+-- SUM OF INTERMEDIATE JOINS CARDINALITIES = 70000 + 303 + 2 + 8361 + 3658 + 3658 + 2 = 85984
+
+
+------------------ ((cat_gender ⋈ cardio) ⋈ (cat_gender ⋈ (ocular ⋈ (ocular_diagnostics ⋈ ocular_diagnostic_keywords)))) ⋈ (cat_gender ⋈ heart) ------------------
+SELECT 
+    COUNT(*)
+FROM 
+(
+    (
+        SELECT
+            cat_gender.cat,
+            COUNT(*)
+        FROM 
+            cat_gender
+                JOIN
+                cardio
+                ON
+                cardio.c_gender_id = cat_gender.id
+        GROUP BY
+            cat_gender.cat
+    ) AS cardio_gender
+        JOIN
+        (
+            SELECT
+                cat_gender.cat,
+                COUNT(*)
+            FROM 
+                cat_gender
+                    JOIN
+                    (
+                        ocular
+                            JOIN
+                            (
+                                ocular_diagnostics
+                                    JOIN
+                                    ocular_diagnostic_keywords
+                                    ON
+                                    ocular_diagnostics.od_diag_id = ocular_diagnostic_keywords.odk_id
+                                    AND
+                                    ocular_diagnostic_keywords.odk_diagnostic != 'normal fundus'
+                            )
+                            ON
+                            ocular.o_id = ocular_diagnostics.od_id
+                    )
+                    ON
+                    ocular.o_gender_id = cat_gender.id
+            GROUP BY
+                cat_gender.cat
+        ) AS ocular_gender
+        ON
+        ocular_gender.cat = cardio_gender.cat
+)
+    JOIN
+    (
+        SELECT
+            cat_gender.cat,
+            COUNT(*)
+        FROM 
+            cat_gender
+                JOIN
+                heart
+                ON
+                heart.h_gender_id = cat_gender.id
+        GROUP BY
+            cat_gender.cat
+    ) AS heart_gender
+    ON
+    cardio_gender.cat = heart_gender.cat
+;
+-- RESULT: 2
+
+
+-------- INTERMEDIATE JOIN CARDINALITIES
+---- cat_gender ⋈ cardio
+SELECT
+    COUNT(*)
+FROM 
+    cat_gender
+        JOIN
+        cardio
+        ON
+        cardio.c_gender_id = cat_gender.id
+;
+-- RESULT: 70000
+
+---- ocular_diagnostics ⋈ ocular_diagnostic_keywords
+SELECT
+    COUNT(*)
+FROM
+    ocular_diagnostics
+        JOIN
+        ocular_diagnostic_keywords
+        ON
+        ocular_diagnostics.od_diag_id = ocular_diagnostic_keywords.odk_id
+        AND
+        ocular_diagnostic_keywords.odk_diagnostic != 'normal fundus'
+;
+-- RESULT: 8361
+
+---- ocular ⋈ (ocular_diagnostics ⋈ ocular_diagnostic_keywords)
+SELECT
+    COUNT(*)
+FROM
+    ocular
+        JOIN
+        (
+            ocular_diagnostics
+                JOIN
+                ocular_diagnostic_keywords
+                ON
+                ocular_diagnostics.od_diag_id = ocular_diagnostic_keywords.odk_id
+                AND
+                ocular_diagnostic_keywords.odk_diagnostic != 'normal fundus'
+        )
+        ON
+        ocular.o_id = ocular_diagnostics.od_id
+;
+-- RESULT: 3658
+
+---- cat_gender ⋈ (ocular ⋈ (ocular_diagnostics ⋈ ocular_diagnostic_keywords))
+SELECT
+    COUNT(*)
+FROM 
+    cat_gender
+        JOIN
+        (
+            ocular
+                JOIN
+                (
+                    ocular_diagnostics
+                        JOIN
+                        ocular_diagnostic_keywords
+                        ON
+                        ocular_diagnostics.od_diag_id = ocular_diagnostic_keywords.odk_id
+                        AND
+                        ocular_diagnostic_keywords.odk_diagnostic != 'normal fundus'
+                )
+                ON
+                ocular.o_id = ocular_diagnostics.od_id
+        )
+        ON
+        ocular.o_gender_id = cat_gender.id
+;
+-- RESULT: 3658
+
+---- (cat_gender ⋈ cardio) ⋈ (cat_gender ⋈ (ocular ⋈ (ocular_diagnostics ⋈ ocular_diagnostic_keywords)))
+SELECT 
+    COUNT(*)
+FROM 
+    (
+        SELECT
+            cat_gender.cat,
+            COUNT(*)
+        FROM 
+            cat_gender
+                JOIN
+                cardio
+                ON
+                cardio.c_gender_id = cat_gender.id
+        GROUP BY
+            cat_gender.cat
+    ) AS cardio_gender
+        JOIN
+        (
+            SELECT
+                cat_gender.cat,
+                COUNT(*)
+            FROM 
+                cat_gender
+                    JOIN
+                    (
+                        ocular
+                            JOIN
+                            (
+                                ocular_diagnostics
+                                    JOIN
+                                    ocular_diagnostic_keywords
+                                    ON
+                                    ocular_diagnostics.od_diag_id = ocular_diagnostic_keywords.odk_id
+                                    AND
+                                    ocular_diagnostic_keywords.odk_diagnostic != 'normal fundus'
+                            )
+                            ON
+                            ocular.o_id = ocular_diagnostics.od_id
+                    )
+                    ON
+                    ocular.o_gender_id = cat_gender.id
+            GROUP BY
+                cat_gender.cat
+        ) AS ocular_gender
+        ON
+        ocular_gender.cat = cardio_gender.cat
+;
+-- RESULT: 2
+
+---- cat_gender ⋈ heart
+SELECT
+    COUNT(*)
+FROM 
+    cat_gender
+        JOIN
+        heart
+        ON
+        heart.h_gender_id = cat_gender.id
+;
+-- RESULT: 303
+
+-- SUM OF INTERMEDIATE JOINS CARDINALITIES = 70000 + 8361 + 3658 + 3658 + 2 + 303 + 2 = 85984
+
+
+-- All three might be fastest, because they have similar sum of intermediate joins cardinalities

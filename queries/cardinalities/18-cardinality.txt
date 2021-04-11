@@ -1,0 +1,334 @@
+SELECT
+    COUNT(*)
+    -- mode() WITHIN GROUP (ORDER BY cat_bp.cat) AS blood_pressure,
+    -- mode() WITHIN GROUP (ORDER BY cat_chol_exam.cat) AS cholesterol_exam,
+    -- mode() WITHIN GROUP (ORDER BY cat_gluc_exam.cat) AS glucose_exam,
+    -- mode() WITHIN GROUP (ORDER BY cat_gender.cat) AS gender
+FROM
+    cardio,
+    cat_bp,
+    cat_chol_exam,
+    cat_gluc_exam,
+    cat_gender
+WHERE
+    cardio.c_cardio_disease = TRUE
+    AND
+    cardio.c_age = (
+        SELECT MAX(c_age) FROM cardio
+    )
+    AND
+    cat_bp.id = cardio.c_blood_pressure_id
+    AND
+    cat_chol_exam.id = cardio.c_cholesterol_id
+    AND
+    cat_gluc_exam.id = cardio.c_glucose_id
+    AND
+    cat_gender.id = cardio.c_gender_id
+;
+-- RESULT: 1412
+
+
+------------------ (((cardio ⋈ cat_bp) ⋈ cat_chol_exam) ⋈ cat_gluc_exam) ⋈ cat_gender ------------------
+SELECT
+    COUNT(*)
+    -- mode() WITHIN GROUP (ORDER BY cat_bp.cat) AS blood_pressure,
+    -- mode() WITHIN GROUP (ORDER BY cat_chol_exam.cat) AS cholesterol_exam,
+    -- mode() WITHIN GROUP (ORDER BY cat_gluc_exam.cat) AS glucose_exam,
+    -- mode() WITHIN GROUP (ORDER BY cat_gender.cat) AS gender
+FROM
+    (
+        (
+            (
+                cardio
+                    JOIN
+                    cat_bp
+                    ON
+                    cat_bp.id = cardio.c_blood_pressure_id
+                    AND
+                    cardio.c_cardio_disease = TRUE
+                    AND
+                    cardio.c_age = (SELECT MAX(c_age) FROM cardio)
+            )
+                JOIN
+                cat_chol_exam
+                ON
+                cat_chol_exam.id = cardio.c_cholesterol_id
+        )
+            JOIN
+            cat_gluc_exam
+            ON
+            cat_gluc_exam.id = cardio.c_glucose_id
+    )
+        JOIN
+        cat_gender
+        ON
+        cat_gender.id = cardio.c_gender_id
+;
+-- RESULT: 1412
+
+-------- INTERMEDIATE JOIN CARDINALITIES 
+---- cardio ⋈ cat_bp
+SELECT
+    COUNT(*)
+FROM
+    cardio
+        JOIN
+        cat_bp
+        ON
+        cat_bp.id = cardio.c_blood_pressure_id
+        AND
+        cardio.c_cardio_disease = TRUE
+        AND
+        cardio.c_age = (SELECT MAX(c_age) FROM cardio)
+;
+-- RESULT: 1412
+
+---- (cardio ⋈ cat_bp) ⋈ cat_chol_exam
+SELECT
+    COUNT(*)
+FROM
+    (
+        cardio
+            JOIN
+            cat_bp
+            ON
+            cat_bp.id = cardio.c_blood_pressure_id
+            AND
+            cardio.c_cardio_disease = TRUE
+            AND
+            cardio.c_age = (SELECT MAX(c_age) FROM cardio)
+    )
+        JOIN
+        cat_chol_exam
+        ON
+        cat_chol_exam.id = cardio.c_cholesterol_id
+;
+-- RESULT: 1412
+
+---- ((cardio ⋈ cat_bp) ⋈ cat_chol_exam) ⋈ cat_gluc_exam
+SELECT
+    COUNT(*)
+FROM
+    (
+        (
+            cardio
+                JOIN
+                cat_bp
+                ON
+                cat_bp.id = cardio.c_blood_pressure_id
+                AND
+                cardio.c_cardio_disease = TRUE
+                AND
+                cardio.c_age = (SELECT MAX(c_age) FROM cardio)
+        )
+            JOIN
+            cat_chol_exam
+            ON
+            cat_chol_exam.id = cardio.c_cholesterol_id
+    )
+        JOIN
+        cat_gluc_exam
+        ON
+        cat_gluc_exam.id = cardio.c_glucose_id
+;
+-- RESULT: 1412
+
+-- SUM OF INTERMEDIATE JOINS CARDINALITIES = 1412 + 1412 + 1412 + 1412 = 5648
+
+
+------------------ ((cardio ⋈ cat_bp) ⋈ (cat_chol_exam ⋈ cat_gluc_exam)) ⋈ cat_gender ------------------
+
+SELECT
+    COUNT(*)
+    -- mode() WITHIN GROUP (ORDER BY cat_bp.cat) AS blood_pressure,
+    -- mode() WITHIN GROUP (ORDER BY cat_chol_exam.cat) AS cholesterol_exam,
+    -- mode() WITHIN GROUP (ORDER BY cat_gluc_exam.cat) AS glucose_exam,
+    -- mode() WITHIN GROUP (ORDER BY cat_gender.cat) AS gender
+FROM
+    (
+        (
+            cardio
+                JOIN
+                cat_bp
+                ON
+                cat_bp.id = cardio.c_blood_pressure_id
+                AND
+                cardio.c_cardio_disease = TRUE
+                AND
+                cardio.c_age = (SELECT MAX(c_age) FROM cardio)
+        )
+            JOIN
+            (
+                cat_chol_exam
+                    JOIN
+                    cat_gluc_exam
+                    ON
+                    TRUE
+            )
+            ON
+            cat_chol_exam.id = cardio.c_cholesterol_id
+            AND
+            cat_gluc_exam.id = cardio.c_glucose_id
+    )
+        JOIN
+        cat_gender
+        ON
+        cat_gender.id = cardio.c_gender_id
+;
+-- RESULT: 1412
+
+-------- INTERMEDIATE JOIN CARDINALITIES
+---- cardio ⋈ cat_bp
+SELECT
+    COUNT(*)
+FROM
+    cardio
+        JOIN
+        cat_bp
+        ON
+        cat_bp.id = cardio.c_blood_pressure_id
+        AND
+        cardio.c_cardio_disease = TRUE
+        AND
+        cardio.c_age = (SELECT MAX(c_age) FROM cardio)
+;
+-- RESULT: 1412
+
+---- cat_chol_exam ⋈ cat_gluc_exam
+SELECT
+    COUNT(*)
+FROM
+    cat_chol_exam
+    JOIN
+    cat_gluc_exam
+    ON
+    TRUE
+;
+-- RESULT: 9
+
+---- (cardio ⋈ cat_bp) ⋈ (cat_chol_exam ⋈ cat_gluc_exam)
+SELECT
+    COUNT(*)
+FROM
+    (
+        cardio
+            JOIN
+            cat_bp
+            ON
+            cat_bp.id = cardio.c_blood_pressure_id
+            AND
+            cardio.c_cardio_disease = TRUE
+            AND
+            cardio.c_age = (SELECT MAX(c_age) FROM cardio)
+    )
+        JOIN
+        (
+            cat_chol_exam
+                JOIN
+                cat_gluc_exam
+                ON
+                TRUE
+        )
+        ON
+        cat_chol_exam.id = cardio.c_cholesterol_id
+        AND
+        cat_gluc_exam.id = cardio.c_glucose_id
+;
+-- RESULT: 1412
+
+-- SUM OF INTERMEDIATE JOINS CARDINALITIES = 1412 + 1412 + 9 + 1412 = 4245
+
+
+------------------ (cardio ⋈ cat_bp) ⋈ ((cat_chol_exam ⋈ cat_gluc_exam) ⋈ cat_gender) ------------------
+SELECT
+    COUNT(*)
+    -- mode() WITHIN GROUP (ORDER BY cat_bp.cat) AS blood_pressure,
+    -- mode() WITHIN GROUP (ORDER BY cat_chol_exam.cat) AS cholesterol_exam,
+    -- mode() WITHIN GROUP (ORDER BY cat_gluc_exam.cat) AS glucose_exam,
+    -- mode() WITHIN GROUP (ORDER BY cat_gender.cat) AS gender
+FROM
+    (
+        cardio
+            JOIN
+            cat_bp
+            ON
+            cat_bp.id = cardio.c_blood_pressure_id
+            AND
+            cardio.c_cardio_disease = TRUE
+            AND
+            cardio.c_age = (SELECT MAX(c_age) FROM cardio)
+    )
+        JOIN
+        (
+            (
+                cat_chol_exam
+                    JOIN
+                    cat_gluc_exam
+                    ON
+                    TRUE
+            )
+                JOIN
+                cat_gender
+                ON
+                TRUE
+        )
+        ON
+        cat_chol_exam.id = cardio.c_cholesterol_id
+        AND
+        cat_gluc_exam.id = cardio.c_glucose_id
+        AND
+        cat_gender.id = cardio.c_gender_id
+;
+-- RESULT: 1412
+
+-------- INTERMEDIATE JOIN CARDINALITIES 
+---- cardio ⋈ cat_bp
+SELECT
+    COUNT(*)
+FROM
+    cardio
+        JOIN
+        cat_bp
+        ON
+        cat_bp.id = cardio.c_blood_pressure_id
+        AND
+        cardio.c_cardio_disease = TRUE
+        AND
+        cardio.c_age = (SELECT MAX(c_age) FROM cardio)
+;
+-- RESULT: 1412
+
+---- cat_chol_exam ⋈ cat_gluc_exam
+SELECT
+    COUNT(*)
+FROM
+    cat_chol_exam
+        JOIN
+        cat_gluc_exam
+        ON
+        TRUE
+;
+-- RESULT: 9
+
+---- (cat_chol_exam ⋈ cat_gluc_exam) ⋈ cat_gender
+SELECT
+    COUNT(*)
+FROM
+    (
+        cat_chol_exam
+            JOIN
+            cat_gluc_exam
+            ON
+            TRUE
+    )
+        JOIN
+        cat_gender
+        ON
+        TRUE
+;
+-- RESULT: 18
+
+-- SUM OF INTERMEDIATE JOINS CARDINALITIES = 1412 + 1412 + 9 + 18 = 2851
+
+
+-- Third plan might be fastest among aboves' because it has least sum of intermediate joins cardinalities

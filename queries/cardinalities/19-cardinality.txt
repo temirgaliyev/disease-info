@@ -1,0 +1,288 @@
+SELECT 
+    COUNT(*)
+FROM 
+    cat_gender,
+    cat_eye,
+    ocular,
+    ocular_diagnostics,
+    ocular_diagnostic_keywords
+WHERE
+    cat_gender.id = ocular.o_gender_id
+    AND
+    ocular_diagnostics.od_case_id = ocular.o_id
+    AND
+    ocular_diagnostics.od_eye_id = cat_eye.id
+    AND
+    ocular_diagnostics.od_diag_id = ocular_diagnostic_keywords.odk_id    
+    AND
+    ocular_diagnostic_keywords.odk_diagnostic != 'normal fundus'
+;
+-- RESULT: 8361
+
+------------------ (((cat_gender ⋈ cat_eye) ⋈ ocular) ⋈ ocular_diagnostics) ⋈ ocular_diagnostic_keywords ------------------
+SELECT 
+    COUNT(*)
+FROM 
+    (
+        (
+            (
+                cat_gender
+                    JOIN
+                    cat_eye
+                    ON
+                    TRUE
+            )
+                JOIN
+                ocular
+                ON
+                cat_gender.id = ocular.o_gender_id
+        )
+            JOIN
+            ocular_diagnostics
+            ON
+            ocular_diagnostics.od_case_id = ocular.o_id
+            AND
+            ocular_diagnostics.od_eye_id = cat_eye.id
+    )
+        JOIN
+        ocular_diagnostic_keywords
+        ON
+        ocular_diagnostics.od_diag_id = ocular_diagnostic_keywords.odk_id    
+        AND
+        ocular_diagnostic_keywords.odk_diagnostic != 'normal fundus'
+;
+-- RESULT: 8361
+
+-------- INTERMEDIATE JOIN CARDINALITIES 
+---- cat_gender ⋈ cat_eye
+SELECT
+    COUNT(*)
+FROM
+    cat_gender
+        JOIN
+        cat_eye
+        ON
+        TRUE
+;
+-- RESULT: 4 
+
+---- (cat_gender ⋈ cat_eye) ⋈ ocular
+SELECT
+    COUNT(*)
+FROM
+    (
+        cat_gender
+            JOIN
+            cat_eye
+            ON
+            TRUE
+    )
+        JOIN
+        ocular
+        ON
+        cat_gender.id = ocular.o_gender_id
+;
+-- RESULT: 12784
+
+---- ((cat_gender ⋈ cat_eye) ⋈ ocular) ⋈ ocular_diagnostics
+SELECT
+    COUNT(*)
+FROM
+    (
+        (
+            cat_gender
+                JOIN
+                cat_eye
+                ON
+                TRUE
+        )
+            JOIN
+            ocular
+            ON
+            cat_gender.id = ocular.o_gender_id
+    )
+        JOIN
+        ocular_diagnostics
+        ON
+        ocular_diagnostics.od_case_id = ocular.o_id
+        AND
+        ocular_diagnostics.od_eye_id = cat_eye.id
+;
+-- RESULT: 14039
+
+-- SUM OF INTERMEDIATE JOINS CARDINALITIES = 4 + 12784 + 14039 + 8361 = 35188
+
+
+------------------ ((cat_gender ⋈ cat_eye) ⋈ (ocular ⋈ ocular_diagnostics)) ⋈ ocular_diagnostic_keywords ------------------
+SELECT 
+    COUNT(*)
+FROM
+    (
+        (
+            cat_gender
+                JOIN
+                cat_eye
+                ON
+                TRUE
+        )
+            JOIN
+            (
+                ocular
+                    JOIN
+                    ocular_diagnostics
+                    ON
+                    ocular_diagnostics.od_case_id = ocular.o_id
+            )
+            ON
+            cat_gender.id = ocular.o_gender_id
+            AND
+            ocular_diagnostics.od_eye_id = cat_eye.id
+    )
+        JOIN
+        ocular_diagnostic_keywords
+        ON
+        ocular_diagnostics.od_diag_id = ocular_diagnostic_keywords.odk_id    
+        AND
+        ocular_diagnostic_keywords.odk_diagnostic != 'normal fundus'
+;
+-- RESULT: 8361
+
+-------- INTERMEDIATE JOIN CARDINALITIES 
+---- cat_gender ⋈ cat_eye
+SELECT
+    COUNT(*)
+FROM
+    cat_gender
+        JOIN
+        cat_eye
+        ON
+        TRUE
+;
+-- RESULT: 4
+
+---- ocular ⋈ ocular_diagnostics
+SELECT
+    COUNT(*)
+FROM
+    ocular
+        JOIN
+        ocular_diagnostics
+        ON
+        ocular_diagnostics.od_case_id = ocular.o_id
+;
+-- RESULT: 14039
+
+---- (cat_gender ⋈ cat_eye) ⋈ (ocular ⋈ ocular_diagnostics)
+SELECT
+    COUNT(*)
+FROM
+    (
+        cat_gender
+            JOIN
+            cat_eye
+            ON
+            TRUE
+    )
+        JOIN
+        (
+            ocular
+                JOIN
+                ocular_diagnostics
+                ON
+                ocular_diagnostics.od_case_id = ocular.o_id
+        )
+        ON
+        cat_gender.id = ocular.o_gender_id
+        AND
+        ocular_diagnostics.od_eye_id = cat_eye.id
+;
+-- RESULT: 14039
+
+-- SUM OF INTERMEDIATE JOINS CARDINALITIES = 4 + 14039 + 14039 + 8361 = 36443
+
+
+------------------ (((cat_gender ⋈ cat_eye) ⋈ ocular) ⋈ (ocular_diagnostics ⋈ ocular_diagnostic_keywords) ------------------
+SELECT 
+    COUNT(*)
+FROM
+    (
+        (
+            (
+                cat_gender
+                    JOIN
+                    cat_eye
+                    ON
+                    TRUE
+            )
+                JOIN
+                ocular
+                ON
+                cat_gender.id = ocular.o_gender_id
+        )
+            JOIN
+            (
+                ocular_diagnostics
+                    JOIN
+                    ocular_diagnostic_keywords
+                    ON
+                    ocular_diagnostics.od_diag_id = ocular_diagnostic_keywords.odk_id    
+                    AND
+                    ocular_diagnostic_keywords.odk_diagnostic != 'normal fundus'
+            )
+            ON
+            ocular_diagnostics.od_case_id = ocular.o_id
+            AND
+            ocular_diagnostics.od_eye_id = cat_eye.id
+    )
+;
+-- RESULT: 8361
+
+-------- INTERMEDIATE JOIN CARDINALITIES 
+---- cat_gender ⋈ cat_eye
+SELECT
+    COUNT(*)
+FROM
+    cat_gender
+        JOIN
+        cat_eye
+        ON
+        TRUE
+;
+-- RESULT: 4
+
+---- (cat_gender ⋈ cat_eye) ⋈ ocular
+SELECT
+    COUNT(*)
+FROM
+    (
+        cat_gender
+            JOIN
+            cat_eye
+            ON
+            TRUE
+    )
+        JOIN
+        ocular
+        ON
+        cat_gender.id = ocular.o_gender_id
+;
+-- RESULT: 12784
+
+---- ocular_diagnostics ⋈ ocular_diagnostic_keywords
+SELECT
+    COUNT(*)
+FROM
+    ocular_diagnostics
+        JOIN
+        ocular_diagnostic_keywords
+        ON
+        ocular_diagnostics.od_diag_id = ocular_diagnostic_keywords.odk_id    
+        AND
+        ocular_diagnostic_keywords.odk_diagnostic != 'normal fundus'
+;
+-- RESULT: 8361
+
+-- SUM OF INTERMEDIATE JOINS CARDINALITIES = 4 + 12784 + 8361 + 8361 = 29510
+
+
+-- Third plan might be fastest among aboves' because it has least sum of intermediate joins cardinalities

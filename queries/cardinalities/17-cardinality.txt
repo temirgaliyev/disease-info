@@ -1,0 +1,325 @@
+SELECT 
+    COUNT(*)
+FROM
+    cat_gender,
+    ocular,
+    ocular_diagnostics,
+    ocular_diagnostic_keywords,
+    cat_eye
+WHERE
+    cat_gender.cat = 'male'
+    AND
+    ocular.o_gender_id = cat_gender.id
+    AND
+    ocular_diagnostics.od_case_id = ocular.o_id
+    AND
+    ocular_diagnostics.od_eye_id = cat_eye.id
+    AND
+    ocular_diagnostics.od_diag_id = ocular_diagnostic_keywords.odk_id    
+    AND
+    ocular_diagnostic_keywords.odk_diagnostic = 'white vessel'
+    AND
+    cat_eye.cat = 'left'
+;
+-- RESULT: 8
+
+
+------------------ (((cat_gender ⋈ ocular) ⋈ ocular_diagnostics) ⋈ ocular_diagnostic_keywords) ⋈ cat_eye ------------------
+SELECT
+    COUNT(*)
+FROM
+    (
+        (
+            (
+                cat_gender
+                    JOIN
+                    ocular
+                    ON
+                    ocular.o_gender_id = cat_gender.id
+                    AND
+                    cat_gender.cat = 'male'
+            )
+                JOIN
+                ocular_diagnostics
+                ON
+                ocular_diagnostics.od_case_id = ocular.o_id
+        )
+            JOIN
+            ocular_diagnostic_keywords
+            ON
+            ocular_diagnostics.od_diag_id = ocular_diagnostic_keywords.odk_id    
+            AND
+            ocular_diagnostic_keywords.odk_diagnostic = 'white vessel'
+    )
+        JOIN
+        cat_eye
+        ON
+        ocular_diagnostics.od_eye_id = cat_eye.id
+        AND
+        cat_eye.cat = 'left'
+;
+-- RESULT: 8
+
+-------- INTERMEDIATE JOIN CARDINALITIES 
+---- cat_gender ⋈ ocular
+SELECT
+    COUNT(*)
+FROM
+    cat_gender
+        JOIN
+        ocular
+        ON
+        ocular.o_gender_id = cat_gender.id
+        AND
+        cat_gender.cat = 'male'
+;
+-- RESULT: 3424
+
+---- (cat_gender ⋈ ocular) ⋈ ocular_diagnostics
+SELECT
+    COUNT(*)
+FROM
+    (
+        cat_gender
+            JOIN
+            ocular
+            ON
+            ocular.o_gender_id = cat_gender.id
+            AND
+            cat_gender.cat = 'male'
+    )
+        JOIN
+        ocular_diagnostics
+        ON
+        ocular_diagnostics.od_case_id = ocular.o_id
+;
+-- RESULT: 7482
+
+---- ((cat_gender ⋈ ocular) ⋈ ocular_diagnostics) ⋈ ocular_diagnostic_keywords
+SELECT
+    COUNT(*)
+FROM
+    (
+        (
+            cat_gender
+                JOIN
+                ocular
+                ON
+                ocular.o_gender_id = cat_gender.id
+                AND
+                cat_gender.cat = 'male'
+        )
+            JOIN
+            ocular_diagnostics
+            ON
+            ocular_diagnostics.od_case_id = ocular.o_id
+    )
+        JOIN
+        ocular_diagnostic_keywords
+        ON
+        ocular_diagnostics.od_diag_id = ocular_diagnostic_keywords.odk_id    
+        AND
+        ocular_diagnostic_keywords.odk_diagnostic = 'white vessel'
+;
+-- RESULT: 12
+
+-- SUM OF INTERMEDIATE JOINS CARDINALITIES = 3424 + 7482 + 12 + 8 = 10926
+
+
+------------------ (((ocular_diagnostics ⋈ ocular) ⋈ cat_gender) ⋈ ocular_diagnostic_keywords) ⋈ cat_eye ------------------
+SELECT
+    COUNT(*)
+FROM
+    (
+        (
+            (
+                ocular_diagnostics
+                    JOIN
+                    ocular
+                    ON
+                    ocular_diagnostics.od_case_id = ocular.o_id
+            )
+                JOIN
+                cat_gender
+                ON
+                ocular.o_gender_id = cat_gender.id
+                AND
+                cat_gender.cat = 'male'
+        )
+            JOIN
+            ocular_diagnostic_keywords
+            ON
+            ocular_diagnostics.od_diag_id = ocular_diagnostic_keywords.odk_id    
+            AND
+            ocular_diagnostic_keywords.odk_diagnostic = 'white vessel'            
+    )
+        JOIN
+        cat_eye
+        ON
+        ocular_diagnostics.od_eye_id = cat_eye.id
+        AND
+        cat_eye.cat = 'left'
+;
+-- RESULT: 8
+
+-------- INTERMEDIATE JOIN CARDINALITIES 
+---- ocular_diagnostics ⋈ ocular
+SELECT
+    COUNT(*)
+FROM
+    ocular_diagnostics
+        JOIN
+        ocular
+        ON
+        ocular_diagnostics.od_case_id = ocular.o_id
+;
+-- RESULT: 14039
+
+---- (ocular_diagnostics ⋈ ocular) ⋈ cat_gender
+SELECT
+    COUNT(*)
+FROM
+    (
+        ocular_diagnostics
+            JOIN
+            ocular
+            ON
+            ocular_diagnostics.od_case_id = ocular.o_id
+    )
+        JOIN
+        cat_gender
+        ON
+        ocular.o_gender_id = cat_gender.id
+        AND
+        cat_gender.cat = 'male'
+;
+-- RESULT: 7482
+
+---- ((ocular_diagnostics ⋈ ocular) ⋈ cat_gender) ⋈ ocular_diagnostic_keywords
+SELECT
+    COUNT(*)
+FROM
+    (
+        (
+            ocular_diagnostics
+                JOIN
+                ocular
+                ON
+                ocular_diagnostics.od_case_id = ocular.o_id
+        )
+            JOIN
+            cat_gender
+            ON
+            ocular.o_gender_id = cat_gender.id
+            AND
+            cat_gender.cat = 'male'
+    )
+        JOIN
+        ocular_diagnostic_keywords
+        ON
+        ocular_diagnostics.od_diag_id = ocular_diagnostic_keywords.odk_id    
+        AND
+        ocular_diagnostic_keywords.odk_diagnostic = 'white vessel'
+;
+-- RESULT: 12
+
+-- SUM OF INTERMEDIATE JOINS CARDINALITIES = 14039 + 7482 + 12 + 8 = 21541
+
+
+------------------ ((cat_gender ⋈ ocular) ⋈ (ocular_diagnostics ⋈ ocular_diagnostic_keywords)) ⋈ cat_eye ------------------
+SELECT
+    COUNT(*)
+FROM
+    (
+        (
+            cat_gender
+                JOIN
+                ocular
+                ON
+                ocular.o_gender_id = cat_gender.id
+                AND
+                cat_gender.cat = 'male'
+        )
+            JOIN
+            (
+                ocular_diagnostics
+                    JOIN
+                    ocular_diagnostic_keywords
+                    ON
+                    ocular_diagnostics.od_diag_id = ocular_diagnostic_keywords.odk_id    
+                    AND
+                    ocular_diagnostic_keywords.odk_diagnostic = 'white vessel'            
+            )
+            ON
+            ocular_diagnostics.od_case_id = ocular.o_id
+    )
+        JOIN
+        cat_eye
+        ON
+        ocular_diagnostics.od_eye_id = cat_eye.id
+        AND
+        cat_eye.cat = 'left'
+; 
+-- RESULT: 8
+
+-------- INTERMEDIATE JOIN CARDINALITIES 
+---- cat_gender ⋈ ocular
+SELECT
+    COUNT(*)
+FROM
+    cat_gender
+        JOIN
+        ocular
+        ON
+        ocular.o_gender_id = cat_gender.id
+        AND
+        cat_gender.cat = 'male'
+;
+-- RESULT: 3424
+
+---- ocular_diagnostics ⋈ ocular_diagnostic_keywords
+SELECT
+    COUNT(*)
+FROM
+    ocular_diagnostics
+        JOIN
+        ocular_diagnostic_keywords
+        ON
+        ocular_diagnostics.od_diag_id = ocular_diagnostic_keywords.odk_id    
+        AND
+        ocular_diagnostic_keywords.odk_diagnostic = 'white vessel'            
+;
+-- RESULT: 22
+
+---- (cat_gender ⋈ ocular) ⋈ (ocular_diagnostics ⋈ ocular_diagnostic_keywords)
+SELECT
+    COUNT(*)
+FROM
+    (
+        cat_gender
+            JOIN
+            ocular
+            ON
+            ocular.o_gender_id = cat_gender.id
+            AND
+            cat_gender.cat = 'male'
+    )
+        JOIN
+        (
+            ocular_diagnostics
+                JOIN
+                ocular_diagnostic_keywords
+                ON
+                ocular_diagnostics.od_diag_id = ocular_diagnostic_keywords.odk_id    
+                AND
+                ocular_diagnostic_keywords.odk_diagnostic = 'white vessel'            
+        )
+        ON
+        ocular_diagnostics.od_case_id = ocular.o_id
+;
+-- RESULT: 12
+
+-- SUM OF INTERMEDIATE JOINS CARDINALITIES = 3424 + 22 + 12 + 8 = 3466
+
+
+-- First plan might be fastest among aboves' because it has least sum of intermediate joins cardinalities

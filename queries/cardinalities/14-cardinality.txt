@@ -1,0 +1,404 @@
+SELECT  
+    COUNT(*)
+FROM
+(
+    SELECT
+        corr(c_diabetes::INTEGER, c_cardio_disease::INTEGER) AS cardio_diabet_corr
+    FROM 
+        cardio
+) AS cardio_diabet,
+(
+    SELECT
+        corr(h_diabetes::INTEGER, h_heart_disease::INTEGER) AS heart_diabet_corr
+    FROM 
+        heart
+) AS heart_diabet,
+(
+    SELECT
+        corr(k_diabetes::INTEGER, k_kidney_disease::INTEGER) AS kidney_diabet_corr
+    FROM 
+        kidney
+) AS kidney_diabet,
+(
+    SELECT
+        corr(o_diabetes::INTEGER, od_diag_id) AS ocular_diabet_corr
+    FROM 
+        ocular,
+        ocular_diagnostics
+    WHERE
+        o_id = od_diag_id
+) AS ocular_diabet
+;
+-- RESULT: 1
+
+
+------------------ ((cardio ⋈ heart) ⋈ kidney) ⋈ (ocular ⋈  ocular_diagnostics) ------------------
+SELECT
+    COUNT(*)
+FROM
+    (((
+        SELECT
+            corr(c_diabetes::INTEGER, c_cardio_disease::INTEGER) AS cardio_diabet_corr
+        FROM 
+            cardio
+    ) AS cardio_diabet
+        JOIN
+        (
+            SELECT
+                corr(h_diabetes::INTEGER, h_heart_disease::INTEGER) AS heart_diabet_corr
+            FROM 
+                heart
+        ) AS heart_diabet
+        ON
+        TRUE)
+        JOIN
+        (
+            SELECT
+                corr(k_diabetes::INTEGER, k_kidney_disease::INTEGER) AS kidney_diabet_corr
+            FROM 
+                kidney
+        ) AS kidney_diabet
+        ON
+        TRUE
+        )
+        JOIN
+        (
+            SELECT
+                corr(o_diabetes::INTEGER, od_diag_id) AS ocular_diabet_corr
+            FROM
+                ocular
+                    JOIN
+                    ocular_diagnostics
+                    ON
+                    o_id = od_diag_id
+        ) AS ocular_diabet
+        ON
+        TRUE
+;
+-- RESULT: 1
+
+
+-------- INTERMEDIATE JOIN CARDINALITIES 
+---- cardio ⋈ heart
+SELECT
+    COUNT(*)
+FROM
+(
+    SELECT
+        corr(c_diabetes::INTEGER, c_cardio_disease::INTEGER) AS cardio_diabet_corr
+    FROM 
+        cardio
+    ) AS cardio_diabet
+        JOIN
+        (
+            SELECT
+                corr(h_diabetes::INTEGER, h_heart_disease::INTEGER) AS heart_diabet_corr
+            FROM 
+                heart
+        ) AS heart_diabet
+        ON
+        TRUE
+;
+-- RESULT: 1
+
+---- (cardio ⋈ heart) ⋈ kidney
+SELECT
+    COUNT(*)
+FROM
+    ((
+        SELECT
+            corr(c_diabetes::INTEGER, c_cardio_disease::INTEGER) AS cardio_diabet_corr
+        FROM 
+            cardio
+    ) AS cardio_diabet
+        JOIN
+        (
+            SELECT
+                corr(h_diabetes::INTEGER, h_heart_disease::INTEGER) AS heart_diabet_corr
+            FROM 
+                heart
+        ) AS heart_diabet
+        ON
+        TRUE)
+        JOIN
+        (
+            SELECT
+                corr(k_diabetes::INTEGER, k_kidney_disease::INTEGER) AS kidney_diabet_corr
+            FROM 
+                kidney
+        ) AS kidney_diabet
+        ON
+        TRUE
+;
+-- RESULT: 1
+
+---- ocular ⋈  ocular_diagnostics
+SELECT
+    COUNT(*)
+FROM
+(
+    SELECT
+    corr(o_diabetes::INTEGER, od_diag_id) AS ocular_diabet_corr
+    FROM
+        ocular
+            JOIN
+            ocular_diagnostics
+            ON
+            o_id = od_diag_id
+) AS ocular_diabet
+;
+-- RESULT: 1
+
+-- SUM OF INTERMEDIATE JOINS CARDINALITIES = 1 + 1 + 1 + 1 = 4
+
+
+------------------ ((cardio ⋈ kidney) ⋈ heart) ⋈ (ocular ⋈  ocular_diagnostics) ------------------
+SELECT
+    COUNT(*)
+FROM
+    (((
+        SELECT
+            corr(c_diabetes::INTEGER, c_cardio_disease::INTEGER) AS cardio_diabet_corr
+        FROM 
+            cardio
+    ) AS cardio_diabet
+        JOIN
+        (
+            SELECT
+                corr(k_diabetes::INTEGER, k_kidney_disease::INTEGER) AS kidney_diabet_corr
+            FROM 
+                kidney
+        ) AS kidney_diabet
+        ON
+        TRUE)
+        JOIN
+        (
+            SELECT
+                corr(h_diabetes::INTEGER, h_heart_disease::INTEGER) AS heart_diabet_corr
+            FROM 
+                heart
+        ) AS heart_diabet
+        ON
+        TRUE
+        )
+        JOIN
+        (
+            SELECT
+                corr(o_diabetes::INTEGER, od_diag_id) AS ocular_diabet_corr
+            FROM
+                ocular
+                    JOIN
+                    ocular_diagnostics
+                    ON
+                    o_id = od_diag_id
+        ) AS ocular_diabet
+        ON
+        TRUE
+;
+-- RESULT: 1
+
+
+-------- INTERMEDIATE JOIN CARDINALITIES
+---- cardio ⋈ kidney
+SELECT
+    COUNT(*)
+FROM
+    (
+        SELECT
+            corr(c_diabetes::INTEGER, c_cardio_disease::INTEGER) AS cardio_diabet_corr
+        FROM 
+            cardio
+    ) AS cardio_diabet
+        JOIN
+        (
+            SELECT
+                corr(k_diabetes::INTEGER, k_kidney_disease::INTEGER) AS kidney_diabet_corr
+            FROM 
+                kidney
+        ) AS kidney_diabet
+        ON
+        TRUE
+;
+-- RESULT: 1
+
+---- (cardio ⋈ kidney) ⋈ heart
+SELECT
+    COUNT(*)
+FROM
+((
+        SELECT
+            corr(c_diabetes::INTEGER, c_cardio_disease::INTEGER) AS cardio_diabet_corr
+        FROM 
+            cardio
+    ) AS cardio_diabet
+        JOIN
+        (
+            SELECT
+                corr(k_diabetes::INTEGER, k_kidney_disease::INTEGER) AS kidney_diabet_corr
+            FROM 
+                kidney
+        ) AS kidney_diabet
+        ON
+        TRUE)
+        JOIN
+        (
+            SELECT
+                corr(h_diabetes::INTEGER, h_heart_disease::INTEGER) AS heart_diabet_corr
+            FROM 
+                heart
+        ) AS heart_diabet
+        ON
+        TRUE
+;
+-- RESULT: 1
+
+---- ocular ⋈  ocular_diagnostics
+SELECT
+    COUNT(*)
+FROM
+(
+    SELECT
+    corr(o_diabetes::INTEGER, od_diag_id) AS ocular_diabet_corr
+    FROM
+        ocular
+            JOIN
+            ocular_diagnostics
+            ON
+            o_id = od_diag_id
+) AS ocular_diabet
+;
+-- RESULT: 1
+
+-- SUM OF INTERMEDIATE JOINS CARDINALITIES = 1 + 1 + 1 + 1 = 4
+
+
+------------------ (((ocular ⋈  ocular_diagnostics) ⋈ kidney) ⋈ heart) ⋈ cardio ------------------
+SELECT
+    COUNT(*)
+FROM
+    (((
+        SELECT
+            corr(o_diabetes::INTEGER, od_diag_id) AS ocular_diabet_corr
+        FROM
+            ocular
+                JOIN
+                ocular_diagnostics
+                ON
+                o_id = od_diag_id
+    ) AS ocular_diabet
+        JOIN
+        (
+            SELECT
+                corr(k_diabetes::INTEGER, k_kidney_disease::INTEGER) AS kidney_diabet_corr
+            FROM 
+                kidney
+        ) AS kidney_diabet
+        ON
+        TRUE
+        )
+        JOIN
+        (
+            SELECT
+                corr(h_diabetes::INTEGER, h_heart_disease::INTEGER) AS heart_diabet_corr
+            FROM 
+                heart
+        ) AS heart_diabet
+        ON
+        TRUE
+        )
+        JOIN
+        (
+            SELECT
+                corr(c_diabetes::INTEGER, c_cardio_disease::INTEGER) AS cardio_diabet_corr
+            FROM 
+                cardio
+        ) AS cardio_diabet
+        ON TRUE
+;
+-- RESULT: 1
+
+
+-------- INTERMEDIATE JOIN CARDINALITIES 
+---- ocular ⋈  ocular_diagnostics
+SELECT
+    COUNT(*)
+FROM
+(
+    SELECT
+    corr(o_diabetes::INTEGER, od_diag_id) AS ocular_diabet_corr
+    FROM
+        ocular
+            JOIN
+            ocular_diagnostics
+            ON
+            o_id = od_diag_id
+) AS ocular_diabet
+;
+-- RESULT: 1
+
+---- (ocular ⋈  ocular_diagnostics) ⋈ kidney
+SELECT
+    COUNT(*)
+FROM
+(
+        SELECT
+            corr(o_diabetes::INTEGER, od_diag_id) AS ocular_diabet_corr
+        FROM
+            ocular
+                JOIN
+                ocular_diagnostics
+                ON
+                o_id = od_diag_id
+    ) AS ocular_diabet
+        JOIN
+        (
+            SELECT
+                corr(k_diabetes::INTEGER, k_kidney_disease::INTEGER) AS kidney_diabet_corr
+            FROM 
+                kidney
+        ) AS kidney_diabet
+        ON
+        TRUE
+;
+-- RESULT: 1
+
+---- ((ocular ⋈  ocular_diagnostics) ⋈ kidney) ⋈ heart
+SELECT
+    COUNT(*)
+FROM
+    ((
+        SELECT
+            corr(o_diabetes::INTEGER, od_diag_id) AS ocular_diabet_corr
+        FROM
+            ocular
+                JOIN
+                ocular_diagnostics
+                ON
+                o_id = od_diag_id
+    ) AS ocular_diabet
+        JOIN
+        (
+            SELECT
+                corr(k_diabetes::INTEGER, k_kidney_disease::INTEGER) AS kidney_diabet_corr
+            FROM 
+                kidney
+        ) AS kidney_diabet
+        ON
+        TRUE
+        )
+        JOIN
+        (
+            SELECT
+                corr(h_diabetes::INTEGER, h_heart_disease::INTEGER) AS heart_diabet_corr
+            FROM 
+                heart
+        ) AS heart_diabet
+        ON
+        TRUE
+;
+-- RESULT: 1
+
+-- SUM OF INTERMEDIATE JOINS CARDINALITIES = 1 + 1 + 1 + 1 = 4
+
+
+-- All three might be fastest, because they have similar sum of intermediate joins cardinalities
