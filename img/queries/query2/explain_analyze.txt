@@ -1,0 +1,112 @@
+Aggregate  (cost=131218.72..131218.73 rows=1 width=8) (actual time=24.405..24.409 rows=1 loops=1)
+  ->  Hash Join  (cost=4147.65..108294.22 rows=9169800 width=0) (actual time=16.695..23.976 rows=7316 loops=1)
+        Hash Cond: (ocular_diagnostics.od_diag_id = ocular_diagnostic_keywords.odk_id)
+        ->  Hash Join  (cost=222.50..492.58 rows=6392 width=4) (actual time=16.013..21.053 rows=6392 loops=1)
+              Hash Cond: (ocular.o_gender_id = cat_gender.id)
+              ->  Hash Join  (cost=184.82..438.07 rows=6392 width=8) (actual time=1.760..5.402 rows=6392 loops=1)
+                    Hash Cond: (ocular_diagnostics.od_id = ocular.o_id)
+                    ->  Seq Scan on ocular_diagnostics  (cost=0.00..216.39 rows=14039 width=8) (actual time=0.010..1.158 rows=14039 loops=1)
+                    ->  Hash  (cost=104.92..104.92 rows=6392 width=8) (actual time=1.736..1.737 rows=6392 loops=1)
+                          Buckets: 8192  Batches: 1  Memory Usage: 314kB
+                          ->  Seq Scan on ocular  (cost=0.00..104.92 rows=6392 width=8) (actual time=0.011..0.759 rows=6392 loops=1)
+              ->  Hash  (cost=22.30..22.30 rows=1230 width=4) (actual time=14.212..14.213 rows=2 loops=1)
+                    Buckets: 2048  Batches: 1  Memory Usage: 17kB
+                    ->  Seq Scan on cat_gender  (cost=0.00..22.30 rows=1230 width=4) (actual time=14.200..14.203 rows=2 loops=1)
+        ->  Hash  (cost=1712.53..1712.53 rows=134850 width=4) (actual time=0.180..0.181 rows=186 loops=1)
+              Buckets: 131072  Batches: 2  Memory Usage: 1036kB
+              ->  Nested Loop  (cost=0.00..1712.53 rows=134850 width=4) (actual time=0.025..0.089 rows=186 loops=1)
+                    ->  Seq Scan on cat_eye  (cost=0.00..24.50 rows=1450 width=0) (actual time=0.005..0.006 rows=2 loops=1)
+                    ->  Materialize  (cost=0.00..2.64 rows=93 width=4) (actual time=0.009..0.029 rows=93 loops=2)
+                          ->  Seq Scan on ocular_diagnostic_keywords  (cost=0.00..2.17 rows=93 width=4) (actual time=0.015..0.030 rows=93 loops=1)
+                                Filter: ((odk_diagnostic)::text <> 'normal fundus'::text)
+                                Rows Removed by Filter: 1
+Planning Time: 1.109 ms
+JIT:
+  Functions: 31
+  Options: Inlining false, Optimization false, Expressions true, Deforming true
+  Timing: Generation 2.927 ms, Inlining 0.000 ms, Optimization 0.758 ms, Emission 13.188 ms, Total 16.872 ms
+Execution Time: 62.289 ms
+Aggregate  (cost=131218.72..131218.73 rows=1 width=8) (actual time=21.786..21.790 rows=1 loops=1)
+  ->  Hash Join  (cost=4147.65..108294.22 rows=9169800 width=0) (actual time=14.563..21.352 rows=7316 loops=1)
+        Hash Cond: (ocular_diagnostics.od_diag_id = ocular_diagnostic_keywords.odk_id)
+        ->  Hash Join  (cost=222.50..492.58 rows=6392 width=4) (actual time=14.342..19.333 rows=6392 loops=1)
+              Hash Cond: (ocular.o_gender_id = cat_gender.id)
+              ->  Hash Join  (cost=184.82..438.07 rows=6392 width=8) (actual time=1.594..5.241 rows=6392 loops=1)
+                    Hash Cond: (ocular_diagnostics.od_id = ocular.o_id)
+                    ->  Seq Scan on ocular_diagnostics  (cost=0.00..216.39 rows=14039 width=8) (actual time=0.007..1.109 rows=14039 loops=1)
+                    ->  Hash  (cost=104.92..104.92 rows=6392 width=8) (actual time=1.576..1.577 rows=6392 loops=1)
+                          Buckets: 8192  Batches: 1  Memory Usage: 314kB
+                          ->  Seq Scan on ocular  (cost=0.00..104.92 rows=6392 width=8) (actual time=0.005..0.708 rows=6392 loops=1)
+              ->  Hash  (cost=22.30..22.30 rows=1230 width=4) (actual time=12.742..12.743 rows=2 loops=1)
+                    Buckets: 2048  Batches: 1  Memory Usage: 17kB
+                    ->  Seq Scan on cat_gender  (cost=0.00..22.30 rows=1230 width=4) (actual time=12.733..12.735 rows=2 loops=1)
+        ->  Hash  (cost=1712.53..1712.53 rows=134850 width=4) (actual time=0.158..0.159 rows=186 loops=1)
+              Buckets: 131072  Batches: 2  Memory Usage: 1036kB
+              ->  Nested Loop  (cost=0.00..1712.53 rows=134850 width=4) (actual time=0.019..0.081 rows=186 loops=1)
+                    ->  Seq Scan on cat_eye  (cost=0.00..24.50 rows=1450 width=0) (actual time=0.004..0.004 rows=2 loops=1)
+                    ->  Materialize  (cost=0.00..2.64 rows=93 width=4) (actual time=0.007..0.027 rows=93 loops=2)
+                          ->  Seq Scan on ocular_diagnostic_keywords  (cost=0.00..2.17 rows=93 width=4) (actual time=0.011..0.027 rows=93 loops=1)
+                                Filter: ((odk_diagnostic)::text <> 'normal fundus'::text)
+                                Rows Removed by Filter: 1
+Planning Time: 0.547 ms
+JIT:
+  Functions: 31
+  Options: Inlining false, Optimization false, Expressions true, Deforming true
+  Timing: Generation 2.790 ms, Inlining 0.000 ms, Optimization 0.527 ms, Emission 11.980 ms, Total 15.297 ms
+Execution Time: 24.670 ms
+Aggregate  (cost=131218.72..131218.73 rows=1 width=8) (actual time=21.945..21.950 rows=1 loops=1)
+  ->  Hash Join  (cost=4147.65..108294.22 rows=9169800 width=0) (actual time=14.703..21.515 rows=7316 loops=1)
+        Hash Cond: (ocular_diagnostics.od_diag_id = ocular_diagnostic_keywords.odk_id)
+        ->  Hash Join  (cost=222.50..492.58 rows=6392 width=4) (actual time=14.447..19.455 rows=6392 loops=1)
+              Hash Cond: (ocular.o_gender_id = cat_gender.id)
+              ->  Hash Join  (cost=184.82..438.07 rows=6392 width=8) (actual time=1.606..5.274 rows=6392 loops=1)
+                    Hash Cond: (ocular_diagnostics.od_id = ocular.o_id)
+                    ->  Seq Scan on ocular_diagnostics  (cost=0.00..216.39 rows=14039 width=8) (actual time=0.008..1.126 rows=14039 loops=1)
+                    ->  Hash  (cost=104.92..104.92 rows=6392 width=8) (actual time=1.586..1.587 rows=6392 loops=1)
+                          Buckets: 8192  Batches: 1  Memory Usage: 314kB
+                          ->  Seq Scan on ocular  (cost=0.00..104.92 rows=6392 width=8) (actual time=0.005..0.723 rows=6392 loops=1)
+              ->  Hash  (cost=22.30..22.30 rows=1230 width=4) (actual time=12.834..12.834 rows=2 loops=1)
+                    Buckets: 2048  Batches: 1  Memory Usage: 17kB
+                    ->  Seq Scan on cat_gender  (cost=0.00..22.30 rows=1230 width=4) (actual time=12.823..12.826 rows=2 loops=1)
+        ->  Hash  (cost=1712.53..1712.53 rows=134850 width=4) (actual time=0.176..0.177 rows=186 loops=1)
+              Buckets: 131072  Batches: 2  Memory Usage: 1036kB
+              ->  Nested Loop  (cost=0.00..1712.53 rows=134850 width=4) (actual time=0.022..0.087 rows=186 loops=1)
+                    ->  Seq Scan on cat_eye  (cost=0.00..24.50 rows=1450 width=0) (actual time=0.004..0.005 rows=2 loops=1)
+                    ->  Materialize  (cost=0.00..2.64 rows=93 width=4) (actual time=0.008..0.029 rows=93 loops=2)
+                          ->  Seq Scan on ocular_diagnostic_keywords  (cost=0.00..2.17 rows=93 width=4) (actual time=0.013..0.030 rows=93 loops=1)
+                                Filter: ((odk_diagnostic)::text <> 'normal fundus'::text)
+                                Rows Removed by Filter: 1
+Planning Time: 0.541 ms
+JIT:
+  Functions: 31
+  Options: Inlining false, Optimization false, Expressions true, Deforming true
+  Timing: Generation 2.854 ms, Inlining 0.000 ms, Optimization 0.556 ms, Emission 12.024 ms, Total 15.434 ms
+Execution Time: 24.897 ms
+Aggregate  (cost=131218.72..131218.73 rows=1 width=8) (actual time=22.289..22.293 rows=1 loops=1)
+  ->  Hash Join  (cost=4147.65..108294.22 rows=9169800 width=0) (actual time=15.034..21.835 rows=7316 loops=1)
+        Hash Cond: (ocular_diagnostics.od_diag_id = ocular_diagnostic_keywords.odk_id)
+        ->  Hash Join  (cost=222.50..492.58 rows=6392 width=4) (actual time=14.774..19.766 rows=6392 loops=1)
+              Hash Cond: (ocular.o_gender_id = cat_gender.id)
+              ->  Hash Join  (cost=184.82..438.07 rows=6392 width=8) (actual time=1.572..5.224 rows=6392 loops=1)
+                    Hash Cond: (ocular_diagnostics.od_id = ocular.o_id)
+                    ->  Seq Scan on ocular_diagnostics  (cost=0.00..216.39 rows=14039 width=8) (actual time=0.013..1.125 rows=14039 loops=1)
+                    ->  Hash  (cost=104.92..104.92 rows=6392 width=8) (actual time=1.544..1.544 rows=6392 loops=1)
+                          Buckets: 8192  Batches: 1  Memory Usage: 314kB
+                          ->  Seq Scan on ocular  (cost=0.00..104.92 rows=6392 width=8) (actual time=0.006..0.704 rows=6392 loops=1)
+              ->  Hash  (cost=22.30..22.30 rows=1230 width=4) (actual time=13.195..13.195 rows=2 loops=1)
+                    Buckets: 2048  Batches: 1  Memory Usage: 17kB
+                    ->  Seq Scan on cat_gender  (cost=0.00..22.30 rows=1230 width=4) (actual time=13.180..13.185 rows=2 loops=1)
+        ->  Hash  (cost=1712.53..1712.53 rows=134850 width=4) (actual time=0.173..0.174 rows=186 loops=1)
+              Buckets: 131072  Batches: 2  Memory Usage: 1036kB
+              ->  Nested Loop  (cost=0.00..1712.53 rows=134850 width=4) (actual time=0.021..0.084 rows=186 loops=1)
+                    ->  Seq Scan on cat_eye  (cost=0.00..24.50 rows=1450 width=0) (actual time=0.005..0.006 rows=2 loops=1)
+                    ->  Materialize  (cost=0.00..2.64 rows=93 width=4) (actual time=0.007..0.027 rows=93 loops=2)
+                          ->  Seq Scan on ocular_diagnostic_keywords  (cost=0.00..2.17 rows=93 width=4) (actual time=0.010..0.026 rows=93 loops=1)
+                                Filter: ((odk_diagnostic)::text <> 'normal fundus'::text)
+                                Rows Removed by Filter: 1
+Planning Time: 0.554 ms
+JIT:
+  Functions: 31
+  Options: Inlining false, Optimization false, Expressions true, Deforming true
+  Timing: Generation 2.818 ms, Inlining 0.000 ms, Optimization 0.533 ms, Emission 12.392 ms, Total 15.743 ms
+Execution Time: 25.206 ms

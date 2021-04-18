@@ -1,0 +1,64 @@
+Aggregate  (cost=438.20..438.21 rows=1 width=8) (actual time=6.768..6.770 rows=1 loops=1)
+  ->  Nested Loop  (cost=438.08..438.19 rows=1 width=0) (actual time=6.764..6.767 rows=1 loops=1)
+        ->  Nested Loop  (cost=0.00..0.08 rows=1 width=0) (actual time=0.003..0.005 rows=1 loops=1)
+              ->  Nested Loop  (cost=0.00..0.05 rows=1 width=0) (actual time=0.002..0.003 rows=1 loops=1)
+                    ->  Result  (cost=0.00..0.01 rows=1 width=8) (actual time=0.001..0.001 rows=1 loops=1)
+                    ->  Result  (cost=0.00..0.01 rows=1 width=8) (actual time=0.000..0.000 rows=1 loops=1)
+              ->  Result  (cost=0.00..0.01 rows=1 width=8) (actual time=0.000..0.000 rows=1 loops=1)
+        ->  Aggregate  (cost=438.08..438.09 rows=1 width=8) (actual time=6.759..6.760 rows=1 loops=1)
+              ->  Hash Join  (cost=184.82..438.08 rows=14039 width=0) (actual time=1.669..6.131 rows=14039 loops=1)
+                    Hash Cond: (ocular_diagnostics.od_diag_id = ocular.o_id)
+                    ->  Seq Scan on ocular_diagnostics  (cost=0.00..216.39 rows=14039 width=4) (actual time=0.005..1.367 rows=14039 loops=1)
+                    ->  Hash  (cost=104.92..104.92 rows=6392 width=4) (actual time=1.612..1.612 rows=6392 loops=1)
+                          Buckets: 8192  Batches: 1  Memory Usage: 289kB
+                          ->  Seq Scan on ocular  (cost=0.00..104.92 rows=6392 width=4) (actual time=0.008..0.702 rows=6392 loops=1)
+Planning Time: 0.768 ms
+Execution Time: 6.864 ms
+Aggregate  (cost=438.20..438.21 rows=1 width=8) (actual time=6.339..6.341 rows=1 loops=1)
+  ->  Nested Loop  (cost=438.08..438.19 rows=1 width=0) (actual time=6.337..6.339 rows=1 loops=1)
+        ->  Nested Loop  (cost=0.00..0.08 rows=1 width=0) (actual time=0.002..0.003 rows=1 loops=1)
+              ->  Nested Loop  (cost=0.00..0.05 rows=1 width=0) (actual time=0.001..0.002 rows=1 loops=1)
+                    ->  Result  (cost=0.00..0.01 rows=1 width=8) (actual time=0.001..0.001 rows=1 loops=1)
+                    ->  Result  (cost=0.00..0.01 rows=1 width=8) (actual time=0.000..0.000 rows=1 loops=1)
+              ->  Result  (cost=0.00..0.01 rows=1 width=8) (actual time=0.000..0.000 rows=1 loops=1)
+        ->  Aggregate  (cost=438.08..438.09 rows=1 width=8) (actual time=6.334..6.335 rows=1 loops=1)
+              ->  Hash Join  (cost=184.82..438.08 rows=14039 width=0) (actual time=1.487..5.718 rows=14039 loops=1)
+                    Hash Cond: (ocular_diagnostics.od_diag_id = ocular.o_id)
+                    ->  Seq Scan on ocular_diagnostics  (cost=0.00..216.39 rows=14039 width=4) (actual time=0.005..1.192 rows=14039 loops=1)
+                    ->  Hash  (cost=104.92..104.92 rows=6392 width=4) (actual time=1.475..1.476 rows=6392 loops=1)
+                          Buckets: 8192  Batches: 1  Memory Usage: 289kB
+                          ->  Seq Scan on ocular  (cost=0.00..104.92 rows=6392 width=4) (actual time=0.003..0.653 rows=6392 loops=1)
+Planning Time: 0.220 ms
+Execution Time: 6.364 ms
+Aggregate  (cost=438.20..438.21 rows=1 width=8) (actual time=6.387..6.388 rows=1 loops=1)
+  ->  Nested Loop  (cost=438.08..438.19 rows=1 width=0) (actual time=6.384..6.386 rows=1 loops=1)
+        ->  Nested Loop  (cost=0.00..0.08 rows=1 width=0) (actual time=0.002..0.003 rows=1 loops=1)
+              ->  Nested Loop  (cost=0.00..0.05 rows=1 width=0) (actual time=0.001..0.002 rows=1 loops=1)
+                    ->  Result  (cost=0.00..0.01 rows=1 width=8) (actual time=0.001..0.001 rows=1 loops=1)
+                    ->  Result  (cost=0.00..0.01 rows=1 width=8) (actual time=0.000..0.000 rows=1 loops=1)
+              ->  Result  (cost=0.00..0.01 rows=1 width=8) (actual time=0.000..0.000 rows=1 loops=1)
+        ->  Aggregate  (cost=438.08..438.09 rows=1 width=8) (actual time=6.381..6.382 rows=1 loops=1)
+              ->  Hash Join  (cost=184.82..438.08 rows=14039 width=0) (actual time=1.533..5.765 rows=14039 loops=1)
+                    Hash Cond: (ocular_diagnostics.od_diag_id = ocular.o_id)
+                    ->  Seq Scan on ocular_diagnostics  (cost=0.00..216.39 rows=14039 width=4) (actual time=0.005..1.199 rows=14039 loops=1)
+                    ->  Hash  (cost=104.92..104.92 rows=6392 width=4) (actual time=1.521..1.522 rows=6392 loops=1)
+                          Buckets: 8192  Batches: 1  Memory Usage: 289kB
+                          ->  Seq Scan on ocular  (cost=0.00..104.92 rows=6392 width=4) (actual time=0.003..0.715 rows=6392 loops=1)
+Planning Time: 0.203 ms
+Execution Time: 6.411 ms
+Aggregate  (cost=438.20..438.21 rows=1 width=8) (actual time=6.377..6.379 rows=1 loops=1)
+  ->  Nested Loop  (cost=438.08..438.19 rows=1 width=0) (actual time=6.375..6.377 rows=1 loops=1)
+        ->  Nested Loop  (cost=438.08..438.16 rows=1 width=0) (actual time=6.374..6.376 rows=1 loops=1)
+              ->  Nested Loop  (cost=438.08..438.13 rows=1 width=0) (actual time=6.374..6.375 rows=1 loops=1)
+                    ->  Aggregate  (cost=438.08..438.09 rows=1 width=8) (actual time=6.373..6.374 rows=1 loops=1)
+                          ->  Hash Join  (cost=184.82..438.08 rows=14039 width=0) (actual time=1.479..5.760 rows=14039 loops=1)
+                                Hash Cond: (ocular_diagnostics.od_diag_id = ocular.o_id)
+                                ->  Seq Scan on ocular_diagnostics  (cost=0.00..216.39 rows=14039 width=4) (actual time=0.005..1.190 rows=14039 loops=1)
+                                ->  Hash  (cost=104.92..104.92 rows=6392 width=4) (actual time=1.468..1.468 rows=6392 loops=1)
+                                      Buckets: 8192  Batches: 1  Memory Usage: 289kB
+                                      ->  Seq Scan on ocular  (cost=0.00..104.92 rows=6392 width=4) (actual time=0.003..0.659 rows=6392 loops=1)
+                    ->  Result  (cost=0.00..0.01 rows=1 width=8) (actual time=0.000..0.000 rows=1 loops=1)
+              ->  Result  (cost=0.00..0.01 rows=1 width=8) (actual time=0.000..0.000 rows=1 loops=1)
+        ->  Result  (cost=0.00..0.01 rows=1 width=8) (actual time=0.000..0.000 rows=1 loops=1)
+Planning Time: 0.216 ms
+Execution Time: 6.402 ms

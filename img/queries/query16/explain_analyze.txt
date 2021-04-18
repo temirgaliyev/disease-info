@@ -1,0 +1,100 @@
+Aggregate  (cost=44222.76..44222.77 rows=1 width=8) (actual time=4.956..4.958 rows=1 loops=1)
+  ->  HashAggregate  (cost=36967.68..43722.76 rows=40000 width=66) (actual time=4.863..4.954 rows=4 loops=1)
+        Group Key: cat_eye.cat, cat_gender.cat
+        Planned Partitions: 4  Batches: 1  Memory Usage: 793kB
+        ->  Nested Loop  (cost=262.87..4152.36 rows=295800 width=58) (actual time=2.805..4.658 rows=544 loops=1)
+              ->  Seq Scan on cat_eye  (cost=0.00..24.50 rows=1450 width=24) (actual time=0.008..0.009 rows=2 loops=1)
+              ->  Materialize  (cost=262.87..430.87 rows=204 width=34) (actual time=1.398..2.284 rows=272 loops=2)
+                    ->  Nested Loop  (cost=262.87..429.85 rows=204 width=34) (actual time=2.791..4.447 rows=272 loops=1)
+                          ->  Hash Join  (cost=262.71..393.64 rows=204 width=4) (actual time=2.768..3.977 rows=272 loops=1)
+                                Hash Cond: (ocular.o_id = ocular_diagnostics.od_id)
+                                ->  Seq Scan on ocular  (cost=0.00..104.92 rows=6392 width=8) (actual time=0.008..0.496 rows=6392 loops=1)
+                                ->  Hash  (cost=257.11..257.11 rows=448 width=4) (actual time=2.717..2.718 rows=551 loops=1)
+                                      Buckets: 1024  Batches: 1  Memory Usage: 28kB
+                                      ->  Hash Join  (cost=2.21..257.11 rows=448 width=4) (actual time=0.067..2.625 rows=551 loops=1)
+                                            Hash Cond: (ocular_diagnostics.od_diag_id = ocular_diagnostic_keywords.odk_id)
+                                            ->  Seq Scan on ocular_diagnostics  (cost=0.00..216.39 rows=14039 width=8) (actual time=0.004..1.052 rows=14039 loops=1)
+                                            ->  Hash  (cost=2.17..2.17 rows=3 width=4) (actual time=0.032..0.033 rows=3 loops=1)
+                                                  Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                                                  ->  Seq Scan on ocular_diagnostic_keywords  (cost=0.00..2.17 rows=3 width=4) (actual time=0.009..0.027 rows=3 loops=1)
+                                                        Filter: ((odk_diagnostic)::text ~~ '%age-related%'::text)
+                                                        Rows Removed by Filter: 91
+                          ->  Index Scan using cat_gender_pkey on cat_gender  (cost=0.15..0.18 rows=1 width=38) (actual time=0.001..0.001 rows=1 loops=272)
+                                Index Cond: (id = ocular.o_gender_id)
+Planning Time: 1.178 ms
+Execution Time: 5.507 ms
+WindowAgg  (cost=37707.18..45562.26 rows=40000 width=98) (actual time=4.887..4.892 rows=4 loops=1)
+  ->  HashAggregate  (cost=37707.18..44462.26 rows=40000 width=66) (actual time=4.783..4.876 rows=4 loops=1)
+        Group Key: cat_eye.cat, cat_gender.cat
+        Planned Partitions: 4  Batches: 1  Memory Usage: 793kB
+        ->  Nested Loop  (cost=262.87..4152.36 rows=295800 width=58) (actual time=2.705..4.570 rows=544 loops=1)
+              ->  Seq Scan on cat_eye  (cost=0.00..24.50 rows=1450 width=24) (actual time=0.004..0.004 rows=2 loops=1)
+              ->  Materialize  (cost=262.87..430.87 rows=204 width=34) (actual time=1.350..2.242 rows=272 loops=2)
+                    ->  Nested Loop  (cost=262.87..429.85 rows=204 width=34) (actual time=2.698..4.362 rows=272 loops=1)
+                          ->  Hash Join  (cost=262.71..393.64 rows=204 width=4) (actual time=2.687..3.895 rows=272 loops=1)
+                                Hash Cond: (ocular.o_id = ocular_diagnostics.od_id)
+                                ->  Seq Scan on ocular  (cost=0.00..104.92 rows=6392 width=8) (actual time=0.003..0.473 rows=6392 loops=1)
+                                ->  Hash  (cost=257.11..257.11 rows=448 width=4) (actual time=2.663..2.664 rows=551 loops=1)
+                                      Buckets: 1024  Batches: 1  Memory Usage: 28kB
+                                      ->  Hash Join  (cost=2.21..257.11 rows=448 width=4) (actual time=0.053..2.558 rows=551 loops=1)
+                                            Hash Cond: (ocular_diagnostics.od_diag_id = ocular_diagnostic_keywords.odk_id)
+                                            ->  Seq Scan on ocular_diagnostics  (cost=0.00..216.39 rows=14039 width=8) (actual time=0.003..1.005 rows=14039 loops=1)
+                                            ->  Hash  (cost=2.17..2.17 rows=3 width=4) (actual time=0.028..0.029 rows=3 loops=1)
+                                                  Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                                                  ->  Seq Scan on ocular_diagnostic_keywords  (cost=0.00..2.17 rows=3 width=4) (actual time=0.007..0.024 rows=3 loops=1)
+                                                        Filter: ((odk_diagnostic)::text ~~ '%age-related%'::text)
+                                                        Rows Removed by Filter: 91
+                          ->  Index Scan using cat_gender_pkey on cat_gender  (cost=0.15..0.18 rows=1 width=38) (actual time=0.001..0.001 rows=1 loops=272)
+                                Index Cond: (id = ocular.o_gender_id)
+Planning Time: 0.591 ms
+Execution Time: 5.278 ms
+WindowAgg  (cost=37707.18..45562.26 rows=40000 width=98) (actual time=4.781..4.786 rows=4 loops=1)
+  ->  HashAggregate  (cost=37707.18..44462.26 rows=40000 width=66) (actual time=4.684..4.774 rows=4 loops=1)
+        Group Key: cat_eye.cat, cat_gender.cat
+        Planned Partitions: 4  Batches: 1  Memory Usage: 793kB
+        ->  Nested Loop  (cost=262.87..4152.36 rows=295800 width=58) (actual time=2.647..4.473 rows=544 loops=1)
+              ->  Seq Scan on cat_eye  (cost=0.00..24.50 rows=1450 width=24) (actual time=0.004..0.005 rows=2 loops=1)
+              ->  Materialize  (cost=262.87..430.87 rows=204 width=34) (actual time=1.321..2.193 rows=272 loops=2)
+                    ->  Nested Loop  (cost=262.87..429.85 rows=204 width=34) (actual time=2.638..4.266 rows=272 loops=1)
+                          ->  Hash Join  (cost=262.71..393.64 rows=204 width=4) (actual time=2.632..3.808 rows=272 loops=1)
+                                Hash Cond: (ocular.o_id = ocular_diagnostics.od_id)
+                                ->  Seq Scan on ocular  (cost=0.00..104.92 rows=6392 width=8) (actual time=0.003..0.470 rows=6392 loops=1)
+                                ->  Hash  (cost=257.11..257.11 rows=448 width=4) (actual time=2.607..2.608 rows=551 loops=1)
+                                      Buckets: 1024  Batches: 1  Memory Usage: 28kB
+                                      ->  Hash Join  (cost=2.21..257.11 rows=448 width=4) (actual time=0.051..2.527 rows=551 loops=1)
+                                            Hash Cond: (ocular_diagnostics.od_diag_id = ocular_diagnostic_keywords.odk_id)
+                                            ->  Seq Scan on ocular_diagnostics  (cost=0.00..216.39 rows=14039 width=8) (actual time=0.003..0.989 rows=14039 loops=1)
+                                            ->  Hash  (cost=2.17..2.17 rows=3 width=4) (actual time=0.030..0.031 rows=3 loops=1)
+                                                  Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                                                  ->  Seq Scan on ocular_diagnostic_keywords  (cost=0.00..2.17 rows=3 width=4) (actual time=0.007..0.025 rows=3 loops=1)
+                                                        Filter: ((odk_diagnostic)::text ~~ '%age-related%'::text)
+                                                        Rows Removed by Filter: 91
+                          ->  Index Scan using cat_gender_pkey on cat_gender  (cost=0.15..0.18 rows=1 width=38) (actual time=0.001..0.001 rows=1 loops=272)
+                                Index Cond: (id = ocular.o_gender_id)
+Planning Time: 0.555 ms
+Execution Time: 4.876 ms
+WindowAgg  (cost=37707.18..45562.26 rows=40000 width=98) (actual time=4.767..4.772 rows=4 loops=1)
+  ->  HashAggregate  (cost=37707.18..44462.26 rows=40000 width=66) (actual time=4.670..4.761 rows=4 loops=1)
+        Group Key: cat_eye.cat, cat_gender.cat
+        Planned Partitions: 4  Batches: 1  Memory Usage: 793kB
+        ->  Nested Loop  (cost=262.87..4152.36 rows=295800 width=58) (actual time=2.635..4.460 rows=544 loops=1)
+              ->  Seq Scan on cat_eye  (cost=0.00..24.50 rows=1450 width=24) (actual time=0.005..0.005 rows=2 loops=1)
+              ->  Materialize  (cost=262.87..430.87 rows=204 width=34) (actual time=1.314..2.186 rows=272 loops=2)
+                    ->  Nested Loop  (cost=262.87..429.85 rows=204 width=34) (actual time=2.627..4.259 rows=272 loops=1)
+                          ->  Hash Join  (cost=262.71..393.64 rows=204 width=4) (actual time=2.617..3.793 rows=272 loops=1)
+                                Hash Cond: (ocular.o_id = ocular_diagnostics.od_id)
+                                ->  Seq Scan on ocular  (cost=0.00..104.92 rows=6392 width=8) (actual time=0.003..0.468 rows=6392 loops=1)
+                                ->  Hash  (cost=257.11..257.11 rows=448 width=4) (actual time=2.598..2.599 rows=551 loops=1)
+                                      Buckets: 1024  Batches: 1  Memory Usage: 28kB
+                                      ->  Hash Join  (cost=2.21..257.11 rows=448 width=4) (actual time=0.049..2.523 rows=551 loops=1)
+                                            Hash Cond: (ocular_diagnostics.od_diag_id = ocular_diagnostic_keywords.odk_id)
+                                            ->  Seq Scan on ocular_diagnostics  (cost=0.00..216.39 rows=14039 width=8) (actual time=0.003..0.997 rows=14039 loops=1)
+                                            ->  Hash  (cost=2.17..2.17 rows=3 width=4) (actual time=0.026..0.027 rows=3 loops=1)
+                                                  Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                                                  ->  Seq Scan on ocular_diagnostic_keywords  (cost=0.00..2.17 rows=3 width=4) (actual time=0.007..0.025 rows=3 loops=1)
+                                                        Filter: ((odk_diagnostic)::text ~~ '%age-related%'::text)
+                                                        Rows Removed by Filter: 91
+                          ->  Index Scan using cat_gender_pkey on cat_gender  (cost=0.15..0.18 rows=1 width=38) (actual time=0.001..0.001 rows=1 loops=272)
+                                Index Cond: (id = ocular.o_gender_id)
+Planning Time: 0.596 ms
+Execution Time: 4.849 ms

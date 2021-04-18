@@ -1,0 +1,116 @@
+Aggregate  (cost=3193.26..3193.27 rows=1 width=8) (actual time=21.485..21.490 rows=1 loops=1)
+  InitPlan 1 (returns $0)
+    ->  Aggregate  (cost=1530.00..1530.01 rows=1 width=4) (actual time=11.117..11.118 rows=1 loops=1)
+          ->  Seq Scan on cardio cardio_1  (cost=0.00..1355.00 rows=70000 width=4) (actual time=0.004..5.335 rows=70000 loops=1)
+  ->  Hash Join  (cost=115.60..1659.87 rows=1352 width=0) (actual time=11.254..21.382 rows=1412 loops=1)
+        Hash Cond: (cardio.c_gender_id = cat_gender.id)
+        ->  Hash Join  (cost=77.93..1618.64 rows=1352 width=4) (actual time=11.212..21.028 rows=1412 loops=1)
+              Hash Cond: (cardio.c_glucose_id = cat_gluc_exam.id)
+              ->  Hash Join  (cost=51.95..1589.09 rows=1352 width=8) (actual time=11.195..20.717 rows=1412 loops=1)
+                    Hash Cond: (cardio.c_cholesterol_id = cat_chol_exam.id)
+                    ->  Hash Join  (cost=25.98..1559.55 rows=1352 width=12) (actual time=11.175..20.388 rows=1412 loops=1)
+                          Hash Cond: (cardio.c_blood_pressure_id = cat_bp.id)
+                          ->  Seq Scan on cardio  (cost=0.00..1530.00 rows=1352 width=16) (actual time=11.134..20.024 rows=1412 loops=1)
+                                Filter: (c_cardio_disease AND (c_age = $0))
+                                Rows Removed by Filter: 68588
+                          ->  Hash  (cost=17.10..17.10 rows=710 width=4) (actual time=0.012..0.013 rows=6 loops=1)
+                                Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                                ->  Seq Scan on cat_bp  (cost=0.00..17.10 rows=710 width=4) (actual time=0.006..0.007 rows=6 loops=1)
+                    ->  Hash  (cost=17.10..17.10 rows=710 width=4) (actual time=0.005..0.005 rows=3 loops=1)
+                          Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                          ->  Seq Scan on cat_chol_exam  (cost=0.00..17.10 rows=710 width=4) (actual time=0.002..0.003 rows=3 loops=1)
+              ->  Hash  (cost=17.10..17.10 rows=710 width=4) (actual time=0.005..0.006 rows=3 loops=1)
+                    Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                    ->  Seq Scan on cat_gluc_exam  (cost=0.00..17.10 rows=710 width=4) (actual time=0.002..0.003 rows=3 loops=1)
+        ->  Hash  (cost=22.30..22.30 rows=1230 width=4) (actual time=0.011..0.011 rows=2 loops=1)
+              Buckets: 2048  Batches: 1  Memory Usage: 17kB
+              ->  Seq Scan on cat_gender  (cost=0.00..22.30 rows=1230 width=4) (actual time=0.004..0.005 rows=2 loops=1)
+Planning Time: 1.031 ms
+Execution Time: 21.634 ms
+Aggregate  (cost=3193.26..3193.27 rows=1 width=8) (actual time=20.677..20.681 rows=1 loops=1)
+  InitPlan 1 (returns $0)
+    ->  Aggregate  (cost=1530.00..1530.01 rows=1 width=4) (actual time=10.458..10.459 rows=1 loops=1)
+          ->  Seq Scan on cardio cardio_1  (cost=0.00..1355.00 rows=70000 width=4) (actual time=0.002..4.943 rows=70000 loops=1)
+  ->  Hash Join  (cost=115.60..1659.87 rows=1352 width=0) (actual time=10.532..20.582 rows=1412 loops=1)
+        Hash Cond: (cardio.c_gender_id = cat_gender.id)
+        ->  Hash Join  (cost=77.93..1618.64 rows=1352 width=4) (actual time=10.519..20.258 rows=1412 loops=1)
+              Hash Cond: (cardio.c_glucose_id = cat_gluc_exam.id)
+              ->  Hash Join  (cost=51.95..1589.09 rows=1352 width=8) (actual time=10.508..19.958 rows=1412 loops=1)
+                    Hash Cond: (cardio.c_cholesterol_id = cat_chol_exam.id)
+                    ->  Hash Join  (cost=25.98..1559.55 rows=1352 width=12) (actual time=10.500..19.640 rows=1412 loops=1)
+                          Hash Cond: (cardio.c_blood_pressure_id = cat_bp.id)
+                          ->  Seq Scan on cardio  (cost=0.00..1530.00 rows=1352 width=16) (actual time=10.470..19.289 rows=1412 loops=1)
+                                Filter: (c_cardio_disease AND (c_age = $0))
+                                Rows Removed by Filter: 68588
+                          ->  Hash  (cost=17.10..17.10 rows=710 width=4) (actual time=0.010..0.010 rows=6 loops=1)
+                                Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                                ->  Seq Scan on cat_bp  (cost=0.00..17.10 rows=710 width=4) (actual time=0.004..0.005 rows=6 loops=1)
+                    ->  Hash  (cost=17.10..17.10 rows=710 width=4) (actual time=0.005..0.005 rows=3 loops=1)
+                          Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                          ->  Seq Scan on cat_chol_exam  (cost=0.00..17.10 rows=710 width=4) (actual time=0.002..0.002 rows=3 loops=1)
+              ->  Hash  (cost=17.10..17.10 rows=710 width=4) (actual time=0.004..0.004 rows=3 loops=1)
+                    Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                    ->  Seq Scan on cat_gluc_exam  (cost=0.00..17.10 rows=710 width=4) (actual time=0.002..0.003 rows=3 loops=1)
+        ->  Hash  (cost=22.30..22.30 rows=1230 width=4) (actual time=0.008..0.009 rows=2 loops=1)
+              Buckets: 2048  Batches: 1  Memory Usage: 17kB
+              ->  Seq Scan on cat_gender  (cost=0.00..22.30 rows=1230 width=4) (actual time=0.006..0.006 rows=2 loops=1)
+Planning Time: 0.489 ms
+Execution Time: 20.744 ms
+Aggregate  (cost=3193.26..3193.27 rows=1 width=8) (actual time=21.529..21.535 rows=1 loops=1)
+  InitPlan 1 (returns $0)
+    ->  Aggregate  (cost=1530.00..1530.01 rows=1 width=4) (actual time=10.626..10.627 rows=1 loops=1)
+          ->  Seq Scan on cardio cardio_1  (cost=0.00..1355.00 rows=70000 width=4) (actual time=0.002..5.041 rows=70000 loops=1)
+  ->  Hash Join  (cost=115.60..1659.87 rows=1352 width=0) (actual time=10.690..21.420 rows=1412 loops=1)
+        Hash Cond: (cardio.c_gender_id = cat_gender.id)
+        ->  Hash Join  (cost=77.93..1618.64 rows=1352 width=4) (actual time=10.677..21.087 rows=1412 loops=1)
+              Hash Cond: (cardio.c_glucose_id = cat_gluc_exam.id)
+              ->  Hash Join  (cost=51.95..1589.09 rows=1352 width=8) (actual time=10.670..20.775 rows=1412 loops=1)
+                    Hash Cond: (cardio.c_cholesterol_id = cat_chol_exam.id)
+                    ->  Hash Join  (cost=25.98..1559.55 rows=1352 width=12) (actual time=10.664..20.458 rows=1412 loops=1)
+                          Hash Cond: (cardio.c_blood_pressure_id = cat_bp.id)
+                          ->  Seq Scan on cardio  (cost=0.00..1530.00 rows=1352 width=16) (actual time=10.639..20.079 rows=1412 loops=1)
+                                Filter: (c_cardio_disease AND (c_age = $0))
+                                Rows Removed by Filter: 68588
+                          ->  Hash  (cost=17.10..17.10 rows=710 width=4) (actual time=0.012..0.014 rows=6 loops=1)
+                                Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                                ->  Seq Scan on cat_bp  (cost=0.00..17.10 rows=710 width=4) (actual time=0.008..0.009 rows=6 loops=1)
+                    ->  Hash  (cost=17.10..17.10 rows=710 width=4) (actual time=0.003..0.004 rows=3 loops=1)
+                          Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                          ->  Seq Scan on cat_chol_exam  (cost=0.00..17.10 rows=710 width=4) (actual time=0.002..0.002 rows=3 loops=1)
+              ->  Hash  (cost=17.10..17.10 rows=710 width=4) (actual time=0.004..0.004 rows=3 loops=1)
+                    Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                    ->  Seq Scan on cat_gluc_exam  (cost=0.00..17.10 rows=710 width=4) (actual time=0.002..0.003 rows=3 loops=1)
+        ->  Hash  (cost=22.30..22.30 rows=1230 width=4) (actual time=0.008..0.009 rows=2 loops=1)
+              Buckets: 2048  Batches: 1  Memory Usage: 17kB
+              ->  Seq Scan on cat_gender  (cost=0.00..22.30 rows=1230 width=4) (actual time=0.005..0.006 rows=2 loops=1)
+Planning Time: 0.398 ms
+Execution Time: 21.587 ms
+Aggregate  (cost=3193.26..3193.27 rows=1 width=8) (actual time=20.976..20.982 rows=1 loops=1)
+  InitPlan 1 (returns $0)
+    ->  Aggregate  (cost=1530.00..1530.01 rows=1 width=4) (actual time=10.557..10.558 rows=1 loops=1)
+          ->  Seq Scan on cardio cardio_1  (cost=0.00..1355.00 rows=70000 width=4) (actual time=0.004..5.057 rows=70000 loops=1)
+  ->  Hash Join  (cost=115.60..1659.87 rows=1352 width=0) (actual time=10.654..20.879 rows=1412 loops=1)
+        Hash Cond: (cardio.c_gender_id = cat_gender.id)
+        ->  Hash Join  (cost=77.93..1618.64 rows=1352 width=4) (actual time=10.639..20.554 rows=1412 loops=1)
+              Hash Cond: (cardio.c_glucose_id = cat_gluc_exam.id)
+              ->  Hash Join  (cost=51.95..1589.09 rows=1352 width=8) (actual time=10.623..20.244 rows=1412 loops=1)
+                    Hash Cond: (cardio.c_cholesterol_id = cat_chol_exam.id)
+                    ->  Hash Join  (cost=25.98..1559.55 rows=1352 width=12) (actual time=10.609..19.930 rows=1412 loops=1)
+                          Hash Cond: (cardio.c_blood_pressure_id = cat_bp.id)
+                          ->  Seq Scan on cardio  (cost=0.00..1530.00 rows=1352 width=16) (actual time=10.571..19.570 rows=1412 loops=1)
+                                Filter: (c_cardio_disease AND (c_age = $0))
+                                Rows Removed by Filter: 68588
+                          ->  Hash  (cost=17.10..17.10 rows=710 width=4) (actual time=0.016..0.017 rows=6 loops=1)
+                                Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                                ->  Seq Scan on cat_bp  (cost=0.00..17.10 rows=710 width=4) (actual time=0.006..0.007 rows=6 loops=1)
+                    ->  Hash  (cost=17.10..17.10 rows=710 width=4) (actual time=0.007..0.007 rows=3 loops=1)
+                          Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                          ->  Seq Scan on cat_chol_exam  (cost=0.00..17.10 rows=710 width=4) (actual time=0.004..0.005 rows=3 loops=1)
+              ->  Hash  (cost=17.10..17.10 rows=710 width=4) (actual time=0.007..0.008 rows=3 loops=1)
+                    Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                    ->  Seq Scan on cat_gluc_exam  (cost=0.00..17.10 rows=710 width=4) (actual time=0.005..0.006 rows=3 loops=1)
+        ->  Hash  (cost=22.30..22.30 rows=1230 width=4) (actual time=0.010..0.010 rows=2 loops=1)
+              Buckets: 2048  Batches: 1  Memory Usage: 17kB
+              ->  Seq Scan on cat_gender  (cost=0.00..22.30 rows=1230 width=4) (actual time=0.007..0.007 rows=2 loops=1)
+Planning Time: 0.441 ms
+Execution Time: 21.036 ms
