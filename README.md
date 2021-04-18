@@ -27,7 +27,7 @@ For obvious reasons, many sick people limit communications, less often appear in
 
 ### Questions
 1. What is the most common eye disease? [SQL](queries/questions/1.pgsql)
-2. What diseases does a middle-aged man suffer from? [SQL](queries/questions/2.pgsql)  ||  [RA](img/queries/ra/2.png) || [CARDINALITY](queries/cardinalities/2-cardinality.txt)
+2. What diseases does a middle-aged man suffer from? [SQL](queries/questions/2.pgsql)  ||  [RA](img/queries/ra/2.png) || [CARDINALITY](queries/cardinalities/2-cardinality.txt) || (avg time: 0.07969131469s)
 3. What is the mean arterial pressure of smokers? [SQL](queries/questions/3.pgsql)
 4. What is the percentage of people with myocardial ischemia among those with heart disease? [SQL](queries/questions/4.pgsql)
 5. What is the susceptibility of myocardial ischemia by age? [SQL](queries/questions/5.pgsql)
@@ -38,13 +38,13 @@ For obvious reasons, many sick people limit communications, less often appear in
 10. In which region of Italy the least people got sick with covid? [SQL](queries/questions/10.pgsql)
 11. On what day was the highest number of cases in Italy? [SQL](queries/questions/11.pgsql)
 12. Is there a correlation between the number of cases of covid per day in Italy and India? [SQL](queries/questions/12.pgsql)
-13. Which gender is most likely to get sick with each of the diseases? [SQL](queries/questions/13.pgsql)  ||  [RA](img/queries/ra/13.png) || [CARDINALITY](queries/cardinalities/13-cardinality.txt)
-14. Is there a correlation between different diseases? [SQL](queries/questions/14.pgsql)  ||  [RA](img/queries/ra/14.png) || [CARDINALITY](queries/cardinalities/14-cardinality.txt)
+13. Which gender is most likely to get sick with each of the diseases? [SQL](queries/questions/13.pgsql)  ||  [RA](img/queries/ra/13.png) || [CARDINALITY](queries/cardinalities/13-cardinality.txt) || (avg time: 0.04699869155s)
+14. Is there a correlation between different diseases? [SQL](queries/questions/14.pgsql)  ||  [RA](img/queries/ra/14.png) || [CARDINALITY](queries/cardinalities/14-cardinality.txt) || (avg time: 0.00932412147s)
 15. Does a person lose appetite with kidney disease? [SQL](queries/questions/15.pgsql)
-16. How likely to get age-related disease on each eye? [SQL](queries/questions/16.pgsql)  ||  [RA](img/queries/ra/16.png) || [CARDINALITY](queries/cardinalities/16-cardinality.txt)
-17. How many males has white vessels on their left eye? [SQL](queries/questions/17.pgsql)  ||  [RA](img/queries/ra/17.png) || [CARDINALITY](queries/cardinalities/17-cardinality.txt)
-18. What blood pressure, cholesterol examination, glucose examination and gender in average has oldest people with cardio disease? [SQL](queries/questions/18.pgsql)  ||  [RA](img/queries/ra/18.png) || [CARDINALITY](queries/cardinalities/18-cardinality.txt)
-19. what is the distribution of diseases of each eye in different genders? [SQL](queries/questions/19.pgsql)  ||  [RA](img/queries/ra/19.png) || [CARDINALITY](queries/cardinalities/19-cardinality.txt)
+16. How likely to get age-related disease on each eye? [SQL](queries/questions/16.pgsql)  ||  [RA](img/queries/ra/16.png) || [CARDINALITY](queries/cardinalities/16-cardinality.txt) || (avg time: 0.0090704441s)
+17. How many males has white vessels on their left eye? [SQL](queries/questions/17.pgsql)  ||  [RA](img/queries/ra/17.png) || [CARDINALITY](queries/cardinalities/17-cardinality.txt) || (avg time: 0.00575914382s)
+18. What blood pressure, cholesterol examination, glucose examination and gender in average has oldest people with cardio disease? [SQL](queries/questions/18.pgsql)  ||  [RA](img/queries/ra/18.png) || [CARDINALITY](queries/cardinalities/18-cardinality.txt) || (avg time: 0.03185234069s)
+19. what is the distribution of diseases of each eye in different genders? [SQL](queries/questions/19.pgsql)  ||  [RA](img/queries/ra/19.png) || [CARDINALITY](queries/cardinalities/19-cardinality.txt) || (avg time: 0.01531696319s)
 
 [Answering queries](queries/questions) 
 
