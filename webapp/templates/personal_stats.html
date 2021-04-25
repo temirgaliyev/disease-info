@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Personal Statistics{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="info-box col-3 m-auto">
+        <span class="info-box-icon bg-info"><i class="fas fa-heart"></i></span>
+
+        <div class="info-box-content">
+            <span class="info-box-text">Heart</span>
+            <span class="info-box-number">{{prob_heart}}</span>
+        </div>
+    </div>
+    <div class="info-box col-3 m-auto">
+        <span class="info-box-icon bg-info"><i class="fas fa-heartbeat"></i></span>
+
+        <div class="info-box-content">
+            <span class="info-box-text">Cardiovascular</span>
+            <span class="info-box-number">{{prob_cardio}}</span>
+        </div>
+    </div>
+    <div class="info-box col-3 m-auto">
+        <span class="info-box-icon bg-info"><i class="fas fa-eye"></i></span>
+
+        <div class="info-box-content">
+            <span class="info-box-text">Eye</span>
+            <span class="info-box-number">{{prob_eye}}</span>
+        </div>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="info-box col-3 m-auto">
+        <span class="info-box-icon bg-info"><i class="fas fa-lungs fa-rotate-180"></i></span>
+
+        <div class="info-box-content">
+            <span class="info-box-text">Kidney</span>
+            <span class="info-box-number">{{prob_kidney}}</span>
+        </div>
+    </div>
+    <div class="info-box col-3 m-auto">
+        <span class="info-box-icon bg-info"><i class="fas fa-file-medical-alt"></i></span>
+
+        <div class="info-box-content">
+            <span class="info-box-text">Coronary Artery Disease</span>
+            <span class="info-box-number">{{prob_cad}}</span>
+        </div>
+    </div>
+
+</div>
+<br>
+<p>*Percentage of people that has given disease with your parameters</p>
+
+<br>
+<p>{{text_bp}}</p>
+<p>{{text_gluc}}</p>
+<p>{{text_chol}}</p>
+
+<p><b>This data is based on biased statistics.</b></p>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+
+</script>
+{% endblock %}

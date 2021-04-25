@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{% endblock %} | DiseaseInfo 3</title>
+
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="dist/css/adminlte.min.css">
+</head>
+
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+    <aside class="position-fixed main-sidebar sidebar-dark-primary elevation-4">
+      <div class="sidebar">
+
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <li class="nav-item menu-open">
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="./general" id="general-stats" class="nav-link">
+                    <i class="nav-icon fas fa-chart-pie"></i>
+                    <p>General Statistics</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="./personal" id="personal-stats" class="nav-link">
+                    <i class="fas fa-user-alt nav-icon"></i>
+                    <p>Personal Statistics</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="./covid" id="covid-stats" class="nav-link">
+                    <i class="fas fa-virus nav-icon"></i>
+                    <p>COVID-19 statistics</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </aside>
+
+    <div class="content-wrapper">
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0">{{ self.title() }}</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        {% block content %}
+        {% endblock %}
+      </div>
+    </div>
+
+  </div>
+
+  <script src="plugins/jquery/jquery.min.js"></script>
+  <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="dist/js/adminlte.js"></script>
+
+  {% block scripts %}
+  {% endblock %}
+</body>
+
+</html>

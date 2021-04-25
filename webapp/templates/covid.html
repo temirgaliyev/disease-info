@@ -1,0 +1,191 @@
+{% extends "base.html" %}
+{% block title %}COVID-19 Statistics{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card bg-gradient-info">
+          <div class="card-header border-0">
+            <h3 class="card-title">COVID-19 in India</h3>
+          </div>
+          <div class="card-body">
+            <canvas class="chart" id="india-covid-chart"
+              style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card bg-gradient-info">
+          <div class="card-header border-0">
+            <h3 class="card-title">COVID-19 in Italy</h3>
+          </div>
+          <div class="card-body">
+            <canvas class="chart" id="italy-covid-chart"
+              style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.getElementById("covid-stats").classList.add("active");
+</script>
+
+<script src="plugins/chart.js/Chart.min.js"></script>
+<script>
+  var covidIndiaChartCanvas = $('#india-covid-chart').get(0).getContext('2d')
+  var covidIndiaChartData = {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+    datasets: [
+    {
+        label: 'Cured',
+        fill: false,
+        borderWidth: 2,
+        lineTension: 0,
+        spanGaps: true,
+        borderColor: '#efefef',
+        pointRadius: 3,
+        pointHoverRadius: 7,
+        pointColor: '#efefef',
+        pointBackgroundColor: '#efefef',
+        data: {{cured}}
+      },
+      {
+        label: 'Confirmed',
+        fill: false,
+        borderWidth: 2,
+        lineTension: 0,
+        spanGaps: true,
+        borderColor: '#efefef',
+        pointRadius: 3,
+        pointHoverRadius: 7,
+        pointColor: '#efefef',
+        pointBackgroundColor: '#efefef',
+        data: {{confirmed}}
+      },
+      {
+        label: 'Deaths',
+        fill: false,
+        borderWidth: 2,
+        lineTension: 0,
+        spanGaps: true,
+        borderColor: '#efefef',
+        pointRadius: 3,
+        pointHoverRadius: 7,
+        pointColor: '#efefef',
+        pointBackgroundColor: '#efefef',
+        data: {{deaths}}
+      },
+      
+    ]
+  }
+
+  var covidIndiaChartOptions = {
+    maintainAspectRatio: false,
+    responsive: true,
+    legend: {
+      display: false
+    },
+    scales: {
+      xAxes: [{
+        ticks: {
+          fontColor: '#efefef'
+        },
+        gridLines: {
+          display: false,
+          color: '#efefef',
+          drawBorder: false
+        }
+      }],
+      yAxes: [{
+        ticks: {
+          stepSize: 5000,
+          fontColor: '#efefef'
+        },
+        gridLines: {
+          display: true,
+          color: '#efefef',
+          drawBorder: false
+        }
+      }]
+    }
+  }
+
+  var covidIndiaChart = new Chart(covidIndiaChartCanvas, {
+    type: 'line',
+    data: covidIndiaChartData,
+    options: covidIndiaChartOptions
+  })
+
+</script>
+
+<script>
+  var covidItalyChartCanvas = $('#italy-covid-chart').get(0).getContext('2d')
+  var covidItalyChartData = {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+    datasets: [
+    {
+        label: 'Cases',
+        fill: false,
+        borderWidth: 2,
+        lineTension: 0,
+        spanGaps: true,
+        borderColor: '#efefef',
+        pointRadius: 3,
+        pointHoverRadius: 7,
+        pointColor: '#efefef',
+        pointBackgroundColor: '#efefef',
+        data: {{cases}}
+      }      
+    ]
+  }
+
+  var covidItalyChartOptions = {
+    maintainAspectRatio: false,
+    responsive: true,
+    legend: {
+      display: false
+    },
+    scales: {
+      xAxes: [{
+        ticks: {
+          fontColor: '#efefef'
+        },
+        gridLines: {
+          display: false,
+          color: '#efefef',
+          drawBorder: false
+        }
+      }],
+      yAxes: [{
+        ticks: {
+          stepSize: 5000,
+          fontColor: '#efefef'
+        },
+        gridLines: {
+          display: true,
+          color: '#efefef',
+          drawBorder: false
+        }
+      }]
+    }
+  }
+
+  var covidItalyChart = new Chart(covidItalyChartCanvas, {
+    type: 'line',
+    data: covidItalyChartData,
+    options: covidItalyChartOptions
+  })
+
+</script>
+
+{% endblock %}

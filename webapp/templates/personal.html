@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+{% block title %}Personal Statistics{% endblock %}
+
+{% block content %}
+<div style="margin: 30px;">
+
+    <form id="personal-stats-form">
+        <label for="radio-gender">Gender</label>
+        <div id="radio-gender" class="form-group row">
+            <div class="form-check col-1">
+                <input id="radio-gender-male" class="form-check-input" type="radio" value="male" name="radio-gender">
+                <label class="form-check-label">Male</label>
+            </div>
+            <div class="form-check col-1">
+                <input id="radio-gender-female" class="form-check-input" type="radio" value="female" name="radio-gender">
+                <label class="form-check-label">Female</label>
+            </div>
+            <div class="form-check col-2">
+                <input id="radio-gender-na" class="form-check-input" type="radio" value="na" name="radio-gender" checked="">
+                <label class="form-check-label">Do not answer</label>
+            </div>
+        </div>
+
+        <div class="row" style="margin-bottom: 10px;">
+            <label class="col-1" for="input-age">Age</label>
+            <input id="input-age" type="number" placeholder="Enter your age" value="">
+        </div>
+
+        <div class="row" style="margin-bottom: 10px;">
+            <label class="col-1" for="input-weight">Weight</label>
+            <input id="input-weight" type="number" placeholder="Enter your weight" value="">
+        </div>
+
+        <div class="row" style="margin-bottom: 10px;">
+            <label class="col-1" for="input-height">Height</label>
+            <input id="input-height" type="number" placeholder="Enter your height" value="">
+        </div>
+
+
+        <div style="margin-bottom: 30px; margin-top: 30px;">
+            <div class="row">
+                <label class="col-2" for="radio-gender">Are you physical active?</label>
+                <div class="form-check col-1">
+                    <input id="radio-active-yes" class="form-check-input" value="yes" type="radio" name="radio-active">
+                    <label class="form-check-label">Yes</label>
+                </div>
+                <div class="form-check col-1">
+                    <input id="radio-active-no" class="form-check-input" value="no" type="radio" name="radio-active">
+                    <label class="form-check-label">No</label>
+                </div>
+                <div class="form-check col-2">
+                    <input id="radio-active-na" class="form-check-input" value="na" type="radio" name="radio-active" checked="">
+                    <label class="form-check-label">Do not answer</label>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <label class="col-2" for="radio-gender">Do you smoke?</label>
+                <div class="form-check col-1">
+                    <input id="radio-smoke-yes" class="form-check-input" value="yes" type="radio" name="radio-smoke">
+                    <label class="form-check-label">Yes</label>
+                </div>
+                <div class="form-check col-1">
+                    <input id="radio-smoke-no" class="form-check-input" value="no" type="radio"  name="radio-smoke">
+                    <label class="form-check-label">No</label>
+                </div>
+                <div class="form-check col-2">
+                    <input id="radio-smoke-na" class="form-check-input" value="na" type="radio" name="radio-smoke" checked="">
+                    <label class="form-check-label">Do not answer</label>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <label class="col-2" for="radio-gender">Do you drink alcohol?</label>
+                <div class="form-check col-1">
+                    <input id="radio-alco-yes" class="form-check-input" value="yes" type="radio" name="radio-alco">
+                    <label class="form-check-label">Yes</label>
+                </div>
+                <div class="form-check col-1">
+                    <input id="radio-alco-no" class="form-check-input" value="no" type="radio" name="radio-alco">
+                    <label class="form-check-label">No</label>
+                </div>
+                <div class="form-check col-2">
+                    <input id="radio-alco-na" class="form-check-input" value="na" type="radio" name="radio-alco" checked="">
+                    <label class="form-check-label">Do not answer</label>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <label class="col-2" for="radio-gender">Do you have a diabetes?</label>
+                <div class="form-check col-1">
+                    <input id="radio-diabetes-yes" class="form-check-input" value="yes" type="radio" name="radio-diabetes">
+                    <label class="form-check-label">Yes</label>
+                </div>
+                <div class="form-check col-1">
+                    <input id="radio-diabetes-no" class="form-check-input" value="no" type="radio" name="radio-diabetes">
+                    <label class="form-check-label">No</label>
+                </div>
+                <div class="form-check col-2">
+                    <input id="radio-diabetes-na" class="form-check-input" value="na" type="radio" name="radio-diabetes" checked="">
+                    <label class="form-check-label">Do not answer</label>
+                </div>
+            </div>
+        </div>
+
+
+        <label for="">What is your blood pressure?</label>
+
+        <div class="row" style="margin-bottom: 10px;">
+
+            <label style="margin-left: 20px;" class="col-1" for="input-age">Systolic</label>
+            <input id="input-systolic" type="number" placeholder="Systolic blood pressure" value="">
+
+            <label style="margin-left: 20px;" class="col-1" for="input-age">Diastolic</label>
+            <input id="input-diastolic" type="number" placeholder="Diastolic blood pressure" value="">
+        </div>
+
+        <div class="row" style="margin-bottom: 10px;">
+            <label class="col-3" for="input-chol">What is your cholesterol level?</label>
+            <input id="input-chol" type="number" placeholder="Cholesterol level" value="">
+        </div>
+
+        <div class="row" style="margin-bottom: 10px;">
+            <label class="col-3" for="input-gluc">What is your glucose level?</label>
+            <input id="input-gluc" type="number" placeholder="Glucose level" value="">
+        </div>
+
+        <button onclick="on_see_stats()" type="button" class="btn btn-info">See statistics</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.getElementById("personal-stats").classList.add("active");
+
+    $("input").each(function () {
+        $(this).keypress(function (e) {
+            var a = [];
+            var k = e.which;
+            for (i = 48; i < 58; i++)
+                a.push(i);
+            if (!(a.indexOf(k) >= 0))
+                e.preventDefault();
+        });
+    })
+
+    function on_see_stats() {
+        var gender = $('input[name=radio-gender]:checked', '#personal-stats-form').val();
+        var age = $("#input-age").val();
+        var weight = $("#input-weight").val();
+        var height = $("#input-height").val();
+        var active = $('input[name=radio-active]:checked', '#personal-stats-form').val();
+        var smoke = $('input[name=radio-smoke]:checked', '#personal-stats-form').val();
+        var alco = $('input[name=radio-alco]:checked', '#personal-stats-form').val();
+        var diabetes = $('input[name=radio-diabetes]:checked', '#personal-stats-form').val();
+        var systolic = $("#input-systolic").val();
+        var diastolic = $("#input-diastolic").val();
+        var chol = $("#input-chol").val();
+        var gluc = $("#input-gluc").val();
+        console.log(gender, age, weight, height, active, smoke, alco, diabetes, systolic, diastolic, chol, gluc);
+
+        location = "/personal_stats?gender="+gender+"&age="+age+"&weight="+weight+"&height="+height+"&active="+active+"&smoke="+smoke+"&alco="+alco+"&diabetes="+diabetes+"&systolic="+systolic+"&diastolic="+diastolic+"&chol="+chol+"&gluc="+gluc;
+    }
+
+</script>
+{% endblock %}
